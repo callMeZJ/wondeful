@@ -6,9 +6,7 @@ import com.wonderful.bean.dto.MasterCardPurchaseDetailsDTO;
 import com.wonderful.bean.entity.MasterCardPurchaseDetails;
 import com.wonderful.service.MasterCardPurchaseDetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
@@ -43,6 +41,35 @@ public class MasterCardPurchaseDetailsController {
         boolean save = masterCardPurchaseDetailsService.save(masterCardPurchaseDetails);
 
         return save;
+
+    }
+
+    @PostMapping("/update")
+    public boolean update(MasterCardPurchaseDetailsDTO masterCardPurchaseDetailsDTO){
+        MasterCardPurchaseDetails masterCardPurchaseDetails = BeanUtil.toBean(masterCardPurchaseDetailsDTO, MasterCardPurchaseDetails.class);
+        masterCardPurchaseDetails.setUpdateTime(LocalDateTime.now());
+
+        boolean save = masterCardPurchaseDetailsService.updateById(masterCardPurchaseDetails);
+
+        return save;
+
+    }
+
+    @GetMapping("/delete")
+    public boolean delete(@RequestParam(value = "id") int id){
+
+        boolean save = masterCardPurchaseDetailsService.removeById(id);
+
+        return save;
+
+    }
+
+    @GetMapping("/find")
+    public MasterCardPurchaseDetails find(@RequestParam(value = "id") int id){
+
+        MasterCardPurchaseDetails masterCardPurchaseDetails = masterCardPurchaseDetailsService.getById(id);
+
+        return masterCardPurchaseDetails;
 
     }
 }
