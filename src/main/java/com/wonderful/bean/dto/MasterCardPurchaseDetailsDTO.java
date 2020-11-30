@@ -15,7 +15,6 @@ import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.time.LocalDateTime;
-import java.util.Date;
 
 @Builder
 @Data
@@ -43,6 +42,8 @@ public class MasterCardPurchaseDetailsDTO {
     private BigDecimal transferAmount;
 
     private Integer discount;
+
+    private BigDecimal points;
 
     private String remarks;
 

@@ -22,6 +22,7 @@
                     {field:'rechargeAmount',title:'充值面额',width:50},
                     {field:'transferAmount',title:'转账金额',width:50},
                     {field:'discount',title:'折扣',width:50, formatter: function(value,row,index){return value+"%"}},
+                    {field:'points',title:'积分',width:50},
                     {field:'remarks',title:'备注',width:50},
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
                             var operation = "<a onclick='Edit(" + row.id + ")'>修改</a> | <a onclick='Delete(" + row.id + ")'>删除</a>";
@@ -37,7 +38,7 @@
                 rownumbers:true,
                 fitColumns:true,
                 singleSelect:true,
-                pageSize:10,
+                pageSize:20,
                 queryParams: {
                     openCardCompanyName: ''
                 }
@@ -72,6 +73,7 @@
                         rechargeAmount:data.rechargeAmount,
                         transferAmount:data.transferTime,
                         discount:data.discount,
+                        points:data.points,
                         remarks:data.remarks
                     });
 
@@ -195,6 +197,7 @@
             <th field="rechargeAmount" width="50">充值面额</th>
             <th field="transferAmount" width="50">转账金额</th>
             <th field="discount" width="50">折扣</th>
+            <th field="points" width="50">积分</th>
             <th field="remarks" width="50">备注</th>
             <th field="operation" width="50">操作</th>
         </tr>
@@ -245,6 +248,12 @@
                         <td>
                             <input class="easyui-numberbox" name="discount" data-options="required:true,max:100"/>
                         </td>
+                        <td>积分:</td>
+                        <td>
+                            <input class="easyui-numberbox" name="points"/>
+                        </td>
+                    </tr>
+                    <tr>
                         <td>备注:</td>
                         <td>
                             <textarea class="easyui-textbox" name="remarks" ></textarea>
@@ -301,6 +310,12 @@
                     <td>
                         <input class="easyui-numberbox" name="discount" data-options="required:true,max:100"/>
                     </td>
+                    <td>积分:</td>
+                    <td>
+                        <input class="easyui-numberbox" name="points"/>
+                    </td>
+                </tr>
+                <tr>
                     <td>备注:</td>
                     <td>
                         <textarea class="easyui-textbox" name="remarks" ></textarea>

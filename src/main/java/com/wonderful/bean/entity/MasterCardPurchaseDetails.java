@@ -42,6 +42,8 @@ public class MasterCardPurchaseDetails {
 
     private Integer discount;
 
+    private BigDecimal points;
+
     private String remarks;
 
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
