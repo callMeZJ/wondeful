@@ -29,12 +29,8 @@ public class MasterCardPurchaseDetailsDTO {
 
     private String masterCardNum;
 
-    //@JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    //@JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private Timestamp transferTime;
 
-    //@JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    //@JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private Timestamp accountingTime;
 
     private BigDecimal rechargeAmount;
@@ -47,12 +43,8 @@ public class MasterCardPurchaseDetailsDTO {
 
     private String remarks;
 
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;
 
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime createTime;
 
     private Integer page;

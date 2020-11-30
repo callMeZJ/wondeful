@@ -117,6 +117,11 @@
             queryParams.masterCardNum = masterCardNum;
             $('#masterCardPurchaseDetailsDg').datagrid('reload');
         }
+        
+        function Clear() {
+            $("#masterCardPurchaseDetailsSearchOpenCardCompanyName").textbox('setValue', '');
+            $("#masterCardPurchaseDetailsSearchMasterCardNum").textbox('setValue', '');
+        }
 
         function Save() {
             $('#AddWin').window('open');
@@ -210,6 +215,7 @@
            |
            <input id="masterCardPurchaseDetailsSearchMasterCardNum" type="text" class="easyui-textbox" data-options="prompt:'请输入主卡卡号..',iconCls:'icon-tip'"></input>
            <button class="easyui-linkbutton"  onclick="Search()" data-options="iconCls:'icon-search'">搜索</button>
+           <button class="easyui-linkbutton"  onclick="Clear()" data-options="iconCls:'icon-clear'">重置</button>
            <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit'">新增</button>
         </div>
     </table>
