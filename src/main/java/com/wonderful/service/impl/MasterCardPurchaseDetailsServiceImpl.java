@@ -20,6 +20,7 @@ public class MasterCardPurchaseDetailsServiceImpl extends ServiceImpl<MasterCard
         LambdaQueryWrapper<MasterCardPurchaseDetails> wrapper = new LambdaQueryWrapper<MasterCardPurchaseDetails>();
         wrapper.orderByDesc(MasterCardPurchaseDetails::getCreateTime);
         wrapper.like(!StringUtils.isEmpty(masterCardPurchaseDetailsDTO.getOpenCardCompanyName()),MasterCardPurchaseDetails::getOpenCardCompanyName,masterCardPurchaseDetailsDTO.getOpenCardCompanyName());
+        wrapper.like(!StringUtils.isEmpty(masterCardPurchaseDetailsDTO.getMasterCardNum()),MasterCardPurchaseDetails::getOpenCardCompanyName,masterCardPurchaseDetailsDTO.getMasterCardNum());
 
         Page page = new Page();
         page.setCurrent(masterCardPurchaseDetailsDTO.getPage());

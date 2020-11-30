@@ -40,7 +40,8 @@
                 singleSelect:true,
                 pageSize:20,
                 queryParams: {
-                    openCardCompanyName: ''
+                    openCardCompanyName: '',
+                    masterCardNum:''
                 }
 
             });
@@ -109,9 +110,11 @@
         }
 
         function Search() {
-            var param = $('#masterCardPurchaseDetailsSearch').textbox('getValue');
+            var openCardCompanyName = $('#masterCardPurchaseDetailsSearchOpenCardCompanyName').textbox('getValue');
+            var masterCardNum = $('#masterCardPurchaseDetailsSearchMasterCardNum').textbox('getValue');
             var queryParams = $('#masterCardPurchaseDetailsDg').datagrid('options').queryParams;
-            queryParams.openCardCompanyName = param;
+            queryParams.openCardCompanyName = openCardCompanyName;
+            queryParams.masterCardNum = masterCardNum;
             $('#masterCardPurchaseDetailsDg').datagrid('reload');
         }
 
@@ -203,9 +206,11 @@
         </tr>
         </thead>
        <div id="masterCardPurchaseDetailsTb">
-           <input id="masterCardPurchaseDetailsSearch" type="text" class="easyui-textbox"></input>
-           <button class="easyui-linkbutton"  onclick="Search()" data-options="iconCls:'icon-search',plain:true">搜索</button>
-           <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit',plain:true">新增</button>
+           <input id="masterCardPurchaseDetailsSearchOpenCardCompanyName" type="text" class="easyui-textbox"  data-options="prompt:'请输入开卡公司..',iconCls:'icon-tip'"></input>
+           |
+           <input id="masterCardPurchaseDetailsSearchMasterCardNum" type="text" class="easyui-textbox" data-options="prompt:'请输入主卡卡号..',iconCls:'icon-tip'"></input>
+           <button class="easyui-linkbutton"  onclick="Search()" data-options="iconCls:'icon-search'">搜索</button>
+           <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit'">新增</button>
         </div>
     </table>
 
