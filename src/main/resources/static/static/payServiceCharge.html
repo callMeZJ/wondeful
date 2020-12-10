@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主卡进货明细</title>
+    <title>支付手续费</title>
 
     <link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css"></link>
     <link rel="stylesheet" type="text/css" href="themes/icon.css"></link>
@@ -12,25 +12,18 @@
     <script type="text/javascript" src="locale/easyui-lang-zh_CN.js"></script>
     <script>
         $(function(){
-            $('#masterCardPurchaseDetailsDg').datagrid({
+            $('#payServiceChargeDg').datagrid({
                 columns:[[
                     {field:'id',title:'ID',width:50,checkbox:true},
-                    {field:'openCardCompanyName',title:'开卡公司',width:50},
-                    {field:'masterCardNum',title:'主卡卡号',width:50},
-                    {field:'transferTime',title:'转账时间',width:50},
-                    {field:'accountingTime',title:'上账时间',width:50},
-                    {field:'rechargeAmount',title:'充值面额',width:50},
-                    {field:'transferAmount',title:'转账金额',width:50},
-                    {field:'discount',title:'折扣',width:50, formatter: function(value,row,index){return value+"%"}},
-                    {field:'points',title:'积分',width:50},
+                    {field:'serviceFee',title:'支付手续费',width:50},
                     {field:'remarks',title:'备注',width:50},
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
-                            var operation = "<a onclick='Edit(" + row.id + ")'>修改</a> | <a onclick='Delete(" + row.id + ")'>删除</a>";
+                            var operation = "<a onclick='Edit(" + row.id + ")'>修改</a>";
                             return operation;
                         }
                     }
                 ]],
-                url:'/masterCardPurchaseDetails/page',
+                url:'/payServiceCharge/page',
                 method:'post',
                 contentType:"application/json;charset=utf-8",
                 toolbar:"#toolbar",
@@ -38,11 +31,11 @@
                 rownumbers:true,
                 fitColumns:true,
                 singleSelect:true,
-                pageSize:20,
+                pageSize:20/*,
                 queryParams: {
                     openCardCompanyName: '',
                     masterCardNum:''
-                }
+                }*/
 
             });
             $('#AddWin').window('close');
@@ -56,7 +49,7 @@
             $.ajax({
                 type:"GET",
                 //请求路径
-                url:"/masterCardPurchaseDetails/find",
+                url:"/payServiceCharge/find",
                 //或false 是否异步
                 async:true,
                 data:{"id":id},
@@ -67,14 +60,7 @@
                 success:function(data,textStatus,jqXHR){
                     $('#EditForm').form('load',{
                         id:data.id,
-                        openCardCompanyName:data.openCardCompanyName,
-                        masterCardNum:data.masterCardNum,
-                        transferTime:data.transferTime,
-                        accountingTime:data.accountingTime,
-                        rechargeAmount:data.rechargeAmount,
-                        transferAmount:data.transferTime,
-                        discount:data.discount,
-                        points:data.points,
+                        serviceFee:data.serviceFee,
                         remarks:data.remarks
                     });
 
@@ -93,7 +79,7 @@
                     $.ajax({
                         type:"GET",
                         //请求路径
-                        url:"/masterCardPurchaseDetails/delete",
+                        url:"/payServiceCharge/delete",
                         //或false 是否异步
                         async:true,
                         data:{"id":id},
@@ -103,7 +89,7 @@
                         dataType:'text',
                         success:function(data,textStatus,jqXHR){
                             $.messager.alert('提示','删除成功','info');
-                            $('#masterCardPurchaseDetailsDg').datagrid('reload');
+                            $('#payServiceChargeDg').datagrid('reload');
                         },
                         error:function(error){
                             $.messager.alert('提示','删除失败','info');
@@ -113,19 +99,19 @@
             });
         }
 
-        function Search() {
+        /*function Search() {
             var openCardCompanyName = $('#masterCardPurchaseDetailsSearchOpenCardCompanyName').textbox('getValue');
             var masterCardNum = $('#masterCardPurchaseDetailsSearchMasterCardNum').textbox('getValue');
             var queryParams = $('#masterCardPurchaseDetailsDg').datagrid('options').queryParams;
             queryParams.openCardCompanyName = openCardCompanyName;
             queryParams.masterCardNum = masterCardNum;
             $('#masterCardPurchaseDetailsDg').datagrid('reload');
-        }
+        }*/
         
-        function Clear() {
+        /*function Clear() {
             $("#masterCardPurchaseDetailsSearchOpenCardCompanyName").textbox('setValue', '');
             $("#masterCardPurchaseDetailsSearchMasterCardNum").textbox('setValue', '');
-        }
+        }*/
 
         function Save() {
             $('#AddWin').window('open');
@@ -135,7 +121,7 @@
             // 显示进度条
             $.messager.progress();
             $('#AddForm').form('submit', {
-                url: '/masterCardPurchaseDetails/save',
+                url: '/payServiceCharge/save',
                 onSubmit: function(){
                     var isValid = $(this).form('validate');
                     if (!isValid){
@@ -152,7 +138,7 @@
                     $.messager.alert('提示','新增成功','info');
                     $('#AddForm').form('clear')
                     $('#AddWin').window('close');
-                    $('#masterCardPurchaseDetailsDg').datagrid('reload');
+                    $('#payServiceChargeDg').datagrid('reload');
                 }
             });
 
@@ -162,7 +148,7 @@
             // 显示进度条
             $.messager.progress();
             $('#EditForm').form('submit', {
-                url: '/masterCardPurchaseDetails/update',
+                url: '/payServiceCharge/update',
                 onSubmit: function(){
                     var isValid = $(this).form('validate');
                     if (!isValid){
@@ -179,7 +165,7 @@
                     $.messager.alert('提示','修改成功','info');
                     $('#EditForm').form('clear')
                     $('#EditWin').window('close');
-                    $('#masterCardPurchaseDetailsDg').datagrid('reload');
+                    $('#payServiceChargeDg').datagrid('reload');
                 }
             });
 
@@ -198,77 +184,34 @@
 </head>
 <body>
 <div>
-    <table id="masterCardPurchaseDetailsDg">
+    <table id="payServiceChargeDg">
         <thead>
         <tr>
             <th field="id" width="50" checkbox="true">ID</th>
-            <th field="openCardCompanyName" width="50">开卡公司</th>
-            <th field="masterCardNum" width="50">主卡卡号</th>
-            <th field="transferTime" width="50">转账时间</th>
-            <th field="accountingTime" width="50">上账时间</th>
-            <th field="rechargeAmount" width="50">充值面额</th>
-            <th field="transferAmount" width="50">转账金额</th>
-            <th field="discount" width="50">折扣</th>
-            <th field="points" width="50">积分</th>
+            <th field="serviceFee" width="50">支付手续费</th>
             <th field="remarks" width="50">备注</th>
             <th field="operation" width="50">操作</th>
         </tr>
         </thead>
-       <div id="masterCardPurchaseDetailsTb">
-           <input id="masterCardPurchaseDetailsSearchOpenCardCompanyName" type="text" class="easyui-textbox"  data-options="prompt:'请输入开卡公司..',iconCls:'icon-tip'"></input>
+       <div id="payServiceChargeTb">
+           <!--<input id="masterCardPurchaseDetailsSearchOpenCardCompanyName" type="text" class="easyui-textbox"  data-options="prompt:'请输入开卡公司..',iconCls:'icon-tip'"></input>
            |
            <input id="masterCardPurchaseDetailsSearchMasterCardNum" type="text" class="easyui-textbox" data-options="prompt:'请输入主卡卡号..',iconCls:'icon-tip'"></input>
            <button class="easyui-linkbutton"  onclick="Search()" data-options="iconCls:'icon-search'">搜索</button>
            <button class="easyui-linkbutton"  onclick="Clear()" data-options="iconCls:'icon-clear'">重置</button>
-           <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit'">新增</button>
+           <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit'">新增</button>-->
         </div>
     </table>
 
 
-    <div id="AddWin" class="easyui-window" title="新增主卡进货明细" style="width: 50%; height: auto" data-options="closed:false,collapsible:false,minimizable:false,maximizable:false">
+    <div id="AddWin" class="easyui-window" title="新增支付手续费" style="width: 50%; height: auto" data-options="closed:false,collapsible:false,minimizable:false,maximizable:false">
             <form id="AddForm" method="post">
                 <table>
                     <tr>
-                        <td>开卡公司:</td>
+                        <td>支付手续费:</td>
                         <td>
-                            <input class="easyui-textbox" type="text" name="openCardCompanyName" data-options="required:true"/>
+                            <input class="easyui-numberbox" name="serviceFee" data-options="required:true,min:0,precision:2"/>
                         </td>
-                        <td>主卡卡号:</td>
-                        <td>
-                            <input class="easyui-textbox" name="masterCardNum" data-options="required:true"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>转账时间:</td>
-                        <td>
-                            <input class="easyui-datetimebox" name="transferTime" data-options="required:true,editable:false"/>
-                        </td>
-                        <td>上账时间:</td>
-                        <td>
-                            <input class="easyui-datetimebox" name="accountingTime" data-options="required:true,editable:false"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>充值面额:</td>
-                        <td>
-                            <input class="easyui-numberbox" name="rechargeAmount" data-options="required:true,min:0,precision:2"/>
-                        </td>
-                        <td>转账金额:</td>
-                        <td>
-                            <input class="easyui-numberbox" name="transferAmount" data-options="required:true,min:0,precision:2"/>
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>折扣:</td>
-                        <td>
-                            <input class="easyui-numberbox" name="discount" data-options="required:true,max:100"/>
-                        </td>
-                        <td>积分:</td>
-                        <td>
-                            <input class="easyui-numberbox" name="points"/>
-                        </td>
-                    </tr>
-                    <tr>
                         <td>备注:</td>
                         <td>
                             <textarea class="easyui-textbox" name="remarks" ></textarea>
@@ -286,51 +229,15 @@
 
 
 
-    <div id="EditWin" class="easyui-window" title="编辑主卡进货明细" style="width: 50%; height: auto" data-options="closed:false,collapsible:false,minimizable:false,maximizable:false">
+    <div id="EditWin" class="easyui-window" title="修改支付手续费" style="width: 50%; height: auto" data-options="closed:false,collapsible:false,minimizable:false,maximizable:false">
         <form id="EditForm" method="post">
             <input type="hidden" name="id" data-options="required:true"/>
             <table>
                 <tr>
-                    <td>开卡公司:</td>
+                    <td>支付手续费:</td>
                     <td>
-                        <input class="easyui-textbox" type="text" name="openCardCompanyName" data-options="required:true"/>
+                        <input class="easyui-numberbox" name="serviceFee" data-options="required:true,min:0,precision:2"/>
                     </td>
-                    <td>主卡卡号:</td>
-                    <td>
-                        <input class="easyui-textbox" name="masterCardNum" data-options="required:true"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>转账时间:</td>
-                    <td>
-                        <input class="easyui-datetimebox" name="transferTime" data-options="required:true,editable:false"/>
-                    </td>
-                    <td>上账时间:</td>
-                    <td>
-                        <input class="easyui-datetimebox" name="accountingTime" data-options="required:true,editable:false"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>充值面额:</td>
-                    <td>
-                        <input class="easyui-numberbox" name="rechargeAmount" data-options="required:true,min:0,precision:2"/>
-                    </td>
-                    <td>转账金额:</td>
-                    <td>
-                        <input class="easyui-numberbox" name="transferAmount" data-options="required:true,min:0,precision:2"/>
-                    </td>
-                </tr>
-                <tr>
-                    <td>折扣:</td>
-                    <td>
-                        <input class="easyui-numberbox" name="discount" data-options="required:true,max:100"/>
-                    </td>
-                    <td>积分:</td>
-                    <td>
-                        <input class="easyui-numberbox" name="points"/>
-                    </td>
-                </tr>
-                <tr>
                     <td>备注:</td>
                     <td>
                         <textarea class="easyui-textbox" name="remarks" ></textarea>
