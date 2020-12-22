@@ -7,7 +7,11 @@ import com.wonderful.bean.dto.MasterCardPurchaseDetailsDTO;
 import com.wonderful.bean.entity.AttacherCardPointDetails;
 import com.wonderful.bean.entity.MasterCardPurchaseDetails;
 
+import java.util.List;
+
 public interface AttacherCardPointDetailsService extends IService<AttacherCardPointDetails> {
 
     IPage<AttacherCardPointDetails> page(AttacherCardPointDetailsDTO attacherCardPointDetailsDTO);
+
+    List<AttacherCardPointDetails> getByAttacherCardNumList(List<String> attacherCardNumList);
 }

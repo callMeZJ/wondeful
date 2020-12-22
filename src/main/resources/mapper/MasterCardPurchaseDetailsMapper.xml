@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wonderful.dao.MasterCardPurchaseDetailsMapper">
+
+    <resultMap id="BaseResultMap" type="com.wonderful.bean.entity.MasterCardPurchaseDetails">
+        <result column="id" property="id" jdbcType="BIGINT"/>
+        <result column="open_card_company_name" property="openCardCompanyName" jdbcType="VARCHAR"/>
+        <result column="master_card_num" property="masterCardNum" jdbcType="VARCHAR"/>
+        <result column="transfer_time" property="transferTime" jdbcType="TIMESTAMP"/>
+        <result column="accounting_time" property="accountingTime" jdbcType="TIMESTAMP"/>
+        <result column="recharge_amount" property="rechargeAmount" jdbcType="DECIMAL"/>
+        <result column="transfer_amount" property="transferAmount" jdbcType="DECIMAL"/>
+        <result column="discount" property="discount" jdbcType="INTEGER"/>
+        <result column="points" property="points" jdbcType="DECIMAL"/>
+        <result column="remarks" property="remarks" jdbcType="VARCHAR"/>
+        <result column="create_time" property="createTime" jdbcType="TIMESTAMP"/>
+        <result column="update_time" property="updateTime" jdbcType="TIMESTAMP"/>
+    </resultMap>
+
+    <select id="pageForSummary" resultType="com.wonderful.bean.entity.MasterCardPurchaseDetails">
+    SELECT a.*
+        FROM
+        (
+            SELECT ANY_VALUE(open_card_company_name) AS open_card_company_name
+                ,ANY_VALUE(master_card_num) AS master_card_num
+                ,ANY_VALUE(create_time) AS create_time
+                ,SUM(a.recharge_amount) AS recharge_amount
+                ,SUM(a.points) AS points FROM master_card_purchase_details a GROUP BY a.master_card_num
+        ) a
+        WHERE 1=1
+        <if test="openCardCompanyName!=null and openCardCompanyName!='' ">
+            AND a.open_card_company_name LIKE concat('%',#{openCardCompanyName},'%')
+        </if>
+        <if test="masterCardNum!=null and masterCardNum!='' ">
+            AND a.master_card_num LIKE concat('%',#{masterCardNum},'%')
+        </if>
+        ORDER BY a.create_time
+    </select>
+
+</mapper>

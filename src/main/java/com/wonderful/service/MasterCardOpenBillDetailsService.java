@@ -7,8 +7,12 @@ import com.wonderful.bean.dto.MasterCardPurchaseDetailsDTO;
 import com.wonderful.bean.entity.MasterCardOpenBillDetails;
 import com.wonderful.bean.entity.MasterCardPurchaseDetails;
 
+import java.util.List;
+
 
 public interface MasterCardOpenBillDetailsService extends IService<MasterCardOpenBillDetails> {
 
     IPage<MasterCardOpenBillDetails> page(MasterCardOpenBillDetailsDTO masterCardOpenBillDetailsDTO);
+
+    List<MasterCardOpenBillDetails> getByMasterCardNumList(List<String> masterCardNumList);
 }

@@ -15,6 +15,8 @@ import com.wonderful.service.MasterCardPurchaseDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 public class MasterCardOpenBillDetailsServiceImpl extends ServiceImpl<MasterCardOpenBillDetailsMapper, MasterCardOpenBillDetails> implements MasterCardOpenBillDetailsService {
 
@@ -33,5 +35,16 @@ public class MasterCardOpenBillDetailsServiceImpl extends ServiceImpl<MasterCard
         IPage<MasterCardOpenBillDetails> p = this.baseMapper.selectPage(page, wrapper);
 
         return p;
+    }
+
+    @Override
+    public List<MasterCardOpenBillDetails> getByMasterCardNumList(List<String> masterCardNumList) {
+
+        LambdaQueryWrapper<MasterCardOpenBillDetails> wrapper = new LambdaQueryWrapper<MasterCardOpenBillDetails>();
+        wrapper.in(MasterCardOpenBillDetails::getMasterCardNum,masterCardNumList);
+        List<MasterCardOpenBillDetails> masterCardOpenBillDetails = this.baseMapper.selectList(wrapper);
+
+        return masterCardOpenBillDetails;
+
     }
 }

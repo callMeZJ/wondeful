@@ -8,4 +8,6 @@ import com.wonderful.bean.entity.MasterCardPurchaseDetails;
 public interface MasterCardPurchaseDetailsService extends IService<MasterCardPurchaseDetails> {
 
     IPage<MasterCardPurchaseDetails> page(MasterCardPurchaseDetailsDTO masterCardPurchaseDetailsDTO);
+
+    IPage<MasterCardPurchaseDetails> pageForSummary(MasterCardPurchaseDetailsDTO masterCardPurchaseDetailsDTO);
 }

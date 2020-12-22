@@ -11,6 +11,8 @@ import com.wonderful.service.AttacherCardPointDetailsService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 public class AttacherCardPointDetailsServiceImpl extends ServiceImpl<AttacherCardPointDetailsMapper, AttacherCardPointDetails> implements AttacherCardPointDetailsService {
 
@@ -29,5 +31,15 @@ public class AttacherCardPointDetailsServiceImpl extends ServiceImpl<AttacherCar
         IPage<AttacherCardPointDetails> p = this.baseMapper.selectPage(page, wrapper);
 
         return p;
+    }
+
+    @Override
+    public List<AttacherCardPointDetails> getByAttacherCardNumList(List<String> attacherCardNumList) {
+
+        LambdaQueryWrapper<AttacherCardPointDetails> wrapper = new LambdaQueryWrapper<AttacherCardPointDetails>();
+        wrapper.in(AttacherCardPointDetails::getCardNum,attacherCardNumList);
+        List<AttacherCardPointDetails> attacherCardPointDetails = this.baseMapper.selectList(wrapper);
+
+        return attacherCardPointDetails;
     }
 }

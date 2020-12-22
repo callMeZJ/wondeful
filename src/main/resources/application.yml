@@ -7,6 +7,8 @@ spring:
     username: root
     password: Dongxiang123!@
 
-#mybatis-plus:
-#  configuration:
-#    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+mybatis-plus:
+  mapper-locations: classpath:mapper/*Mapper.xml
+  type-aliases-package: com.wonderful.bean.entity
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
