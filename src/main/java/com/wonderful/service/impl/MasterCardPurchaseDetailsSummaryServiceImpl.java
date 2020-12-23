@@ -9,6 +9,7 @@ import com.wonderful.bean.entity.*;
 import com.wonderful.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.util.CollectionUtils;
 
 import java.math.BigDecimal;
 import java.util.List;
@@ -40,9 +41,14 @@ public class MasterCardPurchaseDetailsSummaryServiceImpl implements MasterCardPu
         //根据主卡号获取副卡信息
         List<MasterCardPurchaseDetails> records = purchaseDetailsPage.getRecords();
         List<String> masterCardNumList = records.stream().map(o -> o.getMasterCardNum()).collect(Collectors.toList());
+        masterCardNumList.add("nothing");
         List<MasterAttacherCardRelationship> masterAttacherCardRelationshipList = masterAttacherCardRelationshipService.getByMasterCardNumList(masterCardNumList);
+        if(CollectionUtils.isEmpty(masterAttacherCardRelationshipList)){
+            return null;
+        }
         //查询主卡号下面副卡销售数据
         List<String> attacherCardNumList = masterAttacherCardRelationshipList.stream().map(o -> o.getAttacherCardNum()).collect(Collectors.toList());
+        attacherCardNumList.add("nothing");
         List<AttacherCardSaleDetails> attacherCardSaleDetailsList = attacherCardSaleDetailsService.getByAttacherCardNumList(attacherCardNumList);
         //查询主卡号下面副卡积分销售数据
         List<AttacherCardPointDetails> attacherCardPointDetails = attacherCardPointDetailsService.getByAttacherCardNumList(attacherCardNumList);

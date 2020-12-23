@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -30,7 +31,9 @@ public class MasterCardPurchaseDetailsSummaryController {
         IPage<MasterCardPurchaseDetailsSummaryDTO> page = masterCardPurchaseDetailsSummaryService.pageSummary(masterCardPurchaseDetailsSummaryDTO);
 
         if(Objects.isNull(page)){
-            return null;
+            map.put("total",0);
+            map.put("rows", Arrays.asList());
+            return map;
         }
 
         map.put("total",page.getTotal());
