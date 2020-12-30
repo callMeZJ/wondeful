@@ -105,9 +105,12 @@
                     if(data.payWay == '公众号'){
                         $('#payWayCombox').combobox('disable');
                         $('#payTimeDatetimebox').datetimebox('disable');
+                        $('#realPayAmountNumberbox').numberbox('disable');
+
                     }else{
                         $('#payWayCombox').combobox('enable');
                         $('#payTimeDatetimebox').datetimebox('enable');
+                        $('#realPayAmountNumberbox').numberbox('enable');
                     }
                 },
                 error:function(error){
