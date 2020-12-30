@@ -42,6 +42,8 @@ public class AttacherCardSaleDetails {
 
     private BigDecimal distributionPoint;
 
+    private String isSynchronise;
+
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;

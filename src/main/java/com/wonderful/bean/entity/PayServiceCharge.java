@@ -28,6 +28,8 @@ public class PayServiceCharge {
 
     private BigDecimal serviceFee;
 
+    private String way;
+
     private String remarks;
 
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)

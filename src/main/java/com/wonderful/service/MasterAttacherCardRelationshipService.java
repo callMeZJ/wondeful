@@ -16,4 +16,6 @@ public interface MasterAttacherCardRelationshipService extends IService<MasterAt
     IPage<MasterAttacherCardRelationship> page(MasterAttacherCardRelationshipDTO masterAttacherCardRelationshipDTO);
 
     List<MasterAttacherCardRelationship> getByMasterCardNumList(List<String> masterCardNumList);
+
+    List<MasterAttacherCardRelationship> getByAttacherCardNumList(List<String> cardNumList);
 }

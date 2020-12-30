@@ -39,6 +39,8 @@ public class AttacherCardOfficialAccountSaleDetailsDTO {
 
     private String status;
 
+    private String isComparison;
+
     private Timestamp generationTime;
 
     private String remarks;

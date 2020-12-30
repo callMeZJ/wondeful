@@ -15,6 +15,7 @@
             $('#payServiceChargeDg').datagrid({
                 columns:[[
                     {field:'id',title:'ID',width:50,checkbox:true},
+                    {field:'way',title:'支付方式',width:50},
                     {field:'serviceFee',title:'支付手续费',width:50},
                     {field:'remarks',title:'备注',width:50},
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
@@ -60,6 +61,7 @@
                 success:function(data,textStatus,jqXHR){
                     $('#EditForm').form('load',{
                         id:data.id,
+                        way:data.way,
                         serviceFee:data.serviceFee,
                         remarks:data.remarks
                     });
@@ -188,6 +190,7 @@
         <thead>
         <tr>
             <th field="id" width="50" checkbox="true">ID</th>
+            <th field="way" width="50">支付方式</th>
             <th field="serviceFee" width="50">支付手续费</th>
             <th field="remarks" width="50">备注</th>
             <th field="operation" width="50">操作</th>
@@ -208,10 +211,16 @@
             <form id="AddForm" method="post">
                 <table>
                     <tr>
+                        <td>支付方式:</td>
+                        <td>
+                            <input class="easyui-textbox" name="way" data-options="required:true"/>
+                        </td>
                         <td>支付手续费:</td>
                         <td>
-                            <input class="easyui-numberbox" name="serviceFee" data-options="required:true,min:0,precision:2"/>
+                            <input class="easyui-numberbox" name="serviceFee" data-options="required:true,min:0,precision:3"/>
                         </td>
+                    </tr>
+                    <tr>
                         <td>备注:</td>
                         <td>
                             <textarea class="easyui-textbox" name="remarks" ></textarea>
@@ -234,10 +243,16 @@
             <input type="hidden" name="id" data-options="required:true"/>
             <table>
                 <tr>
+                    <td>支付方式:</td>
+                    <td>
+                        <input class="easyui-textbox" name="way" data-options="required:true,editable:false"/>
+                    </td>
                     <td>支付手续费:</td>
                     <td>
-                        <input class="easyui-numberbox" name="serviceFee" data-options="required:true,min:0,precision:2"/>
+                        <input class="easyui-numberbox" name="serviceFee" data-options="required:true,min:0,precision:3"/>
                     </td>
+                </tr>
+                <tr>
                     <td>备注:</td>
                     <td>
                         <textarea class="easyui-textbox" name="remarks" ></textarea>

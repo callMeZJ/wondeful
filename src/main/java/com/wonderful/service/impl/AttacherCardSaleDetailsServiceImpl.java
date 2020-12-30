@@ -48,4 +48,14 @@ public class AttacherCardSaleDetailsServiceImpl extends ServiceImpl<AttacherCard
         return attacherCardSaleDetails;
 
     }
+
+    @Override
+    public List<AttacherCardSaleDetails> getIsNotSynchronise() {
+        LambdaQueryWrapper<AttacherCardSaleDetails> wrapper = new LambdaQueryWrapper<AttacherCardSaleDetails>();
+        wrapper.eq(AttacherCardSaleDetails::getIsSynchronise,"no");
+
+        List<AttacherCardSaleDetails> attacherCardSaleDetails = this.baseMapper.selectList(wrapper);
+
+        return attacherCardSaleDetails;
+    }
 }

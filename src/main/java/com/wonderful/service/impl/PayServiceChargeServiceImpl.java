@@ -15,6 +15,9 @@ import com.wonderful.service.PayServiceChargeService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.math.BigDecimal;
+import java.util.List;
+
 @Service
 public class PayServiceChargeServiceImpl extends ServiceImpl<PayServiceChargeMapper, PayServiceCharge> implements PayServiceChargeService {
 
@@ -31,5 +34,22 @@ public class PayServiceChargeServiceImpl extends ServiceImpl<PayServiceChargeMap
         IPage<PayServiceCharge> p = this.baseMapper.selectPage(page, wrapper);
 
         return p;
+    }
+
+    @Override
+    public PayServiceCharge getServiceFeeByWay(String way) {
+
+        LambdaQueryWrapper<PayServiceCharge> wrapper = new LambdaQueryWrapper<PayServiceCharge>();
+        wrapper.eq(PayServiceCharge::getWay,way);
+
+        PayServiceCharge payServiceCharge = this.baseMapper.selectOne(wrapper);
+        return payServiceCharge;
+    }
+
+    @Override
+    public List<PayServiceCharge> getPayServie() {
+
+        LambdaQueryWrapper<PayServiceCharge> wrapper = new LambdaQueryWrapper<PayServiceCharge>();
+        return this.baseMapper.selectList(wrapper);
     }
 }

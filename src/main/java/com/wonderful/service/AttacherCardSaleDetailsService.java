@@ -12,4 +12,6 @@ public interface AttacherCardSaleDetailsService extends IService<AttacherCardSal
     IPage<AttacherCardSaleDetails> page(AttacherCardSaleDetailsDTO attacherCardSaleDetailsDTO);
 
     List<AttacherCardSaleDetails> getByAttacherCardNumList(List<String> attacherCardNumList);
+
+    List<AttacherCardSaleDetails> getIsNotSynchronise();
 }

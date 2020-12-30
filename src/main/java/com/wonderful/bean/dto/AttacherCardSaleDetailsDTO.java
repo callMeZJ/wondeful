@@ -40,6 +40,8 @@ public class AttacherCardSaleDetailsDTO {
 
     private BigDecimal distributionPoint;
 
+    private String isSynchronise;
+
     private LocalDateTime updateTime;
 
     private LocalDateTime createTime;

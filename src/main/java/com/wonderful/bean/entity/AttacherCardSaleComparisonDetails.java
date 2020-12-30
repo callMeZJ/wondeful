@@ -26,8 +26,10 @@ import java.time.LocalDateTime;
 @TableName("attacher_card_sale_comparison_details")
 public class AttacherCardSaleComparisonDetails {
 
-    @TableId(type = IdType.AUTO)
+    @TableId(type = IdType.INPUT)
     private BigInteger id;
+
+    private BigInteger comparisonAttacherCardOfficialAccountSaleDetailsId;
 
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @JsonDeserialize(using = CustomLocalDateDeserializer.class)
@@ -40,6 +42,8 @@ public class AttacherCardSaleComparisonDetails {
     private String masterCardNum;
 
     private BigDecimal rechargeAmount;
+
+    private BigDecimal payAmount;
 
     private Integer discount;
 
@@ -56,6 +60,12 @@ public class AttacherCardSaleComparisonDetails {
     private String oils;
 
     private String remarks;
+
+    private String isComparison;
+
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    private LocalDateTime transactionTime;
 
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)

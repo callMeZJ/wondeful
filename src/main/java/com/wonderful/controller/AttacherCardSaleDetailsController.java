@@ -38,6 +38,7 @@ public class AttacherCardSaleDetailsController {
     @PostMapping("/save")
     public boolean save(AttacherCardSaleDetailsDTO attacherCardSaleDetailsDTO){
         AttacherCardSaleDetails attacherCardSaleDetails = BeanUtil.toBean(attacherCardSaleDetailsDTO, AttacherCardSaleDetails.class);
+        attacherCardSaleDetails.setIsSynchronise("no");
         attacherCardSaleDetails.setCreateTime(LocalDateTime.now());
         attacherCardSaleDetails.setUpdateTime(LocalDateTime.now());
 

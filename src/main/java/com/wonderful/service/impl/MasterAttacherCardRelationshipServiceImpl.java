@@ -47,4 +47,14 @@ public class MasterAttacherCardRelationshipServiceImpl extends ServiceImpl<Maste
 
         return masterAttacherCardRelationships;
     }
+
+    @Override
+    public List<MasterAttacherCardRelationship> getByAttacherCardNumList(List<String> cardNumList) {
+
+        LambdaQueryWrapper<MasterAttacherCardRelationship> wrapper = new LambdaQueryWrapper<MasterAttacherCardRelationship>();
+        wrapper.in(MasterAttacherCardRelationship::getAttacherCardNum,cardNumList);
+        List<MasterAttacherCardRelationship> masterAttacherCardRelationships = this.baseMapper.selectList(wrapper);
+
+        return masterAttacherCardRelationships;
+    }
 }

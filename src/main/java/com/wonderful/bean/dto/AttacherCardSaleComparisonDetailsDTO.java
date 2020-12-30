@@ -30,6 +30,8 @@ public class AttacherCardSaleComparisonDetailsDTO {
     @TableId(type = IdType.AUTO)
     private BigInteger id;
 
+    private BigInteger comparisonAttacherCardOfficialAccountSaleDetailsId;
+
     private Date date;
 
     private String cardNum;
@@ -39,6 +41,8 @@ public class AttacherCardSaleComparisonDetailsDTO {
     private String masterCardNum;
 
     private BigDecimal rechargeAmount;
+
+    private BigDecimal payAmount;
 
     private Integer discount;
 
@@ -53,6 +57,10 @@ public class AttacherCardSaleComparisonDetailsDTO {
     private String oils;
 
     private String remarks;
+
+    private String isComparison;
+
+    private Timestamp transactionTime;
 
     private LocalDateTime updateTime;
 

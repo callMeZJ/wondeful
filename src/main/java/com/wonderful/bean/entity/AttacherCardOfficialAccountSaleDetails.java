@@ -44,6 +44,8 @@ public class AttacherCardOfficialAccountSaleDetails {
 
     private String status;
 
+    private String isComparison;
+
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime generationTime;

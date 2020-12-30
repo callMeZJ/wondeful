@@ -10,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -70,6 +71,15 @@ public class PayServiceChargeController {
         PayServiceCharge payServiceCharge = payServiceChargeService.getById(id);
 
         return payServiceCharge;
+
+    }
+
+    @GetMapping("/getPayServie")
+    public List<PayServiceCharge> getPayServie(){
+
+        List<PayServiceCharge> list= payServiceChargeService.getPayServie();
+
+        return list;
 
     }
 }

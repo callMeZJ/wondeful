@@ -4,6 +4,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.wonderful.bean.dto.AttacherCardSaleComparisonDetailsDTO;
 import com.wonderful.bean.dto.AttacherCardSaleDetailsDTO;
+import com.wonderful.bean.entity.AttacherCardOfficialAccountSaleDetails;
 import com.wonderful.bean.entity.AttacherCardSaleComparisonDetails;
 import com.wonderful.bean.entity.AttacherCardSaleDetails;
 
@@ -13,4 +14,7 @@ public interface AttacherCardSaleComparisonDetailsService extends IService<Attac
 
     IPage<AttacherCardSaleComparisonDetails> page(AttacherCardSaleComparisonDetailsDTO attacherCardSaleComparisonDetailsDTO);
 
+    void updateMatched(AttacherCardOfficialAccountSaleDetails attacherCardOfficialAccountSaleDetails);
+
+    boolean saveAndUpdateOther(List<AttacherCardSaleComparisonDetails> attacherCardSaleComparisonDetailsList);
 }

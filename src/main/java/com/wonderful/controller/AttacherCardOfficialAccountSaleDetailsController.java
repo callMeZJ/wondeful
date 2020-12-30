@@ -40,6 +40,7 @@ public class AttacherCardOfficialAccountSaleDetailsController {
         AttacherCardOfficialAccountSaleDetails attacherCardOfficialAccountSaleDetails = BeanUtil.toBean(attacherCardOfficialAccountSaleDetailsDTO, AttacherCardOfficialAccountSaleDetails.class);
         attacherCardOfficialAccountSaleDetails.setCreateTime(LocalDateTime.now());
         attacherCardOfficialAccountSaleDetails.setUpdateTime(LocalDateTime.now());
+        attacherCardOfficialAccountSaleDetails.setIsComparison("no");
 
         boolean save = attacherCardOfficialAccountSaleDetailsService.save(attacherCardOfficialAccountSaleDetails);
 

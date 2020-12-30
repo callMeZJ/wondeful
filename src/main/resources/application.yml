@@ -6,6 +6,11 @@ spring:
     url: jdbc:mysql://124.70.211.57:3306/wonderful?characterEncoding=UTF-8&&zeroDateTimeBehavior=convertToNull&autoReconnect=true&failOverReadOnly=false&connectTimeout=0&useSSL=false
     username: root
     password: Dongxiang123!@
+  rabbitmq:
+    host: 192.168.1.203
+    port: 5672
+    username: admin
+    password: 123456
 
 mybatis-plus:
   mapper-locations: classpath:mapper/*Mapper.xml
