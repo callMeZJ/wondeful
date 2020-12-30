@@ -7,15 +7,13 @@ import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wonderful.bean.dto.AttacherCardSaleComparisonDetailsDTO;
 import com.wonderful.bean.dto.AttacherCardSaleDetailsDTO;
-import com.wonderful.bean.entity.AttacherCardOfficialAccountSaleDetails;
-import com.wonderful.bean.entity.AttacherCardSaleComparisonDetails;
-import com.wonderful.bean.entity.AttacherCardSaleDetails;
-import com.wonderful.bean.entity.PayServiceCharge;
+import com.wonderful.bean.entity.*;
 import com.wonderful.dao.AttacherCardOfficialAccountSaleDetailsMapper;
 import com.wonderful.dao.AttacherCardSaleComparisonDetailsMapper;
 import com.wonderful.dao.AttacherCardSaleDetailsMapper;
 import com.wonderful.service.AttacherCardSaleComparisonDetailsService;
 import com.wonderful.service.AttacherCardSaleDetailsService;
+import com.wonderful.service.MatchTimeService;
 import com.wonderful.service.PayServiceChargeService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -39,6 +37,8 @@ public class AttacherCardSaleComparisonDetailsServiceImpl extends ServiceImpl<At
     private AttacherCardSaleDetailsService attacherCardSaleDetailsService;
     @Autowired
     private PayServiceChargeService payServiceChargeService;
+    @Autowired
+    private MatchTimeService matchTimeService;
 
     @Override
     public IPage<AttacherCardSaleComparisonDetails> page(AttacherCardSaleComparisonDetailsDTO attacherCardSaleComparisonDetailsDTO) {
@@ -61,9 +61,11 @@ public class AttacherCardSaleComparisonDetailsServiceImpl extends ServiceImpl<At
     @Transactional(rollbackFor = Exception.class)
     public void updateMatched(AttacherCardOfficialAccountSaleDetails attacherCardOfficialAccountSaleDetails) {
 
-        //TODO 查询匹配时间配置表
+        //查询匹配时间配置表
         LocalDateTime generationTime = attacherCardOfficialAccountSaleDetails.getGenerationTime();
-        LocalDateTime localDateTime = generationTime.plusMinutes(5l);
+        MatchTime matchTime = matchTimeService.findOnlyOne();
+        Long timeLong = Objects.isNull(matchTime) ? 0l : matchTime.getTimeLength();
+        LocalDateTime localDateTime = generationTime.plusSeconds(timeLong);
 
         LambdaQueryWrapper<AttacherCardSaleComparisonDetails> wrapper = new LambdaQueryWrapper<AttacherCardSaleComparisonDetails>();
         wrapper.eq(AttacherCardSaleComparisonDetails::getCardNum,attacherCardOfficialAccountSaleDetails.getOilCardNum());
