@@ -189,12 +189,19 @@
                 //返回的数据格式：json/xml/html/script/jsonp/text
                 dataType:'text',
                 success:function(data,textStatus,jqXHR){
+                    $.messager.progress('close');
                     $.messager.alert('提示',data,'info');
+                    $('#attacherCardSaleDetailsDg').datagrid('reload');
                 },
                 error:function(error){
                     $.messager.alert('提示','比对失败','info');
                 }
             })
+            $.messager.progress({
+                title: '提示',
+                msg: '数据比对中，请稍候……',
+                text: ''
+            });
         }
 
         function addSubmit() {
