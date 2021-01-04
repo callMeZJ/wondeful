@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>主卡进货明细</title>
+    <title>系统用户管理</title>
 
     <link rel="stylesheet" type="text/css" href="themes/bootstrap/easyui.css"></link>
     <link rel="stylesheet" type="text/css" href="themes/icon.css"></link>
@@ -16,7 +16,10 @@
                 columns:[[
                     {field:'id',title:'ID',width:50,checkbox:true},
                     {field:'name',title:'用户名',width:50},
-                    {field:'pwd',title:'密码',width:50},
+                    {field:'pwd',title:'密码',width:50,formatter:function (value, row, index) {
+                        var s = "***"+value+"***"
+                            return s;
+                        }},
                     {field:'remarks',title:'备注',width:50},
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
                             var operation = "<a onclick='Edit(" + row.id + ")'>修改</a> | <a onclick='Delete(" + row.id + ")'>删除</a>";
