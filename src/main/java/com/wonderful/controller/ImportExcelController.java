@@ -24,7 +24,7 @@ public class ImportExcelController {
      * 读取 excel
      * @return
      */
-    @PostMapping("upload")
+    @PostMapping("attacherCardSaleDetailsUpload")
     public String upload(MultipartFile file) throws IOException {
 
         //写法1
