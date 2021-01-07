@@ -1,9 +1,12 @@
 package com.wonderful.controller;
 
 import com.alibaba.excel.EasyExcel;
+import com.wonderful.bean.dto.AttacherCardOfficialAccountSaleDetailsImportDTO;
 import com.wonderful.bean.dto.AttacherCardSaleDetailsImportDTO;
 import com.wonderful.bean.entity.AttacherCardSaleDetails;
+import com.wonderful.service.AttacherCardOfficialAccountSaleDetailsService;
 import com.wonderful.service.AttacherCardSaleDetailsService;
+import com.wonderful.service.excel.in.AttacherCardOfficialAccountSaleDetailsListener;
 import com.wonderful.service.excel.in.AttacherCardSaleDetailsListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -19,6 +22,8 @@ public class ImportExcelController {
 
     @Autowired
     private AttacherCardSaleDetailsService attacherCardSaleDetailsService;
+    @Autowired
+    private AttacherCardOfficialAccountSaleDetailsService attacherCardOfficialAccountSaleDetailsService;
 
     /**
      * 读取 excel
@@ -39,6 +44,20 @@ public class ImportExcelController {
         //excelReader.read(readSheet);
         //这里千万别忘记关闭，读的时候会创建临时文件，到时磁盘会崩的
         //excelReader.finish();
+        return "导入成功";
+    }
+
+    /**
+     * 读取 excel
+     * @return
+     */
+    @PostMapping("attacherCardOfficialAccountSaleDetailsUpload")
+    public String upload4AttacherCardOfficialAccountSaleDetails(MultipartFile file) throws IOException {
+
+        EasyExcel.read(file.getInputStream(), AttacherCardOfficialAccountSaleDetailsImportDTO.class, new AttacherCardOfficialAccountSaleDetailsListener(attacherCardOfficialAccountSaleDetailsService))
+                .sheet()
+                .doRead();
+
         return "导入成功";
     }
 }
