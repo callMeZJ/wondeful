@@ -7,6 +7,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.math.BigInteger;
 import java.sql.Timestamp;
 
@@ -28,6 +29,12 @@ public class MasterAttacherCardRelationshipDTO {
     private String status;
 
     private String oils;
+
+    private String customerCode;
+
+    private BigDecimal discount;
+
+    private String cardBuyer;
 
     private Timestamp updateTime;
 

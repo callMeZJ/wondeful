@@ -20,6 +20,9 @@
                     {field:'openCardTime',title:'开卡时间',width:50},
                     {field:'status',title:'状态',width:50},
                     {field:'oils',title:'油品',width:50},
+                    {field:'customerCode',title:'客户编码',width:50},
+                    {field:'discount',title:'折扣',width:50},
+                    {field:'cardBuyer',title:'购卡人',width:50},
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
                             var operation = "<a onclick='Edit(" + row.id + ")'>修改</a> | <a onclick='Delete(" + row.id + ")'>删除</a>";
                             return operation;
@@ -67,7 +70,10 @@
                         attacherCardNum:data.attacherCardNum,
                         openCardTime:data.openCardTime,
                         status:data.status,
-                        oils:data.oils
+                        oils:data.oils,
+                        customerCode:data.customerCode,
+                        discount:data.discount,
+                        cardBuyer:data.cardBuyer
                     });
 
 
@@ -203,6 +209,9 @@
             <th field="openCardTime" width="50">开卡时间</th>
             <th field="status" width="50">状态</th>
             <th field="oils" width="50">油品</th>
+            <th field="customerCode" width="50">客户编码</th>
+            <th field="discount" width="50">折扣</th>
+            <th field="cardBuyer" width="50">购卡人</th>
             <th field="operation" width="50">操作</th>
         </tr>
         </thead>
@@ -246,6 +255,20 @@
                         <td>
                             <input class="easyui-textbox" name="oils" data-options="required:true"/>
                         </td>
+                        <td>客户编号:</td>
+                        <td>
+                            <input class="easyui-textbox" name="customerCode" data-options="required:true"/>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>折扣:</td>
+                        <td>
+                            <input class="easyui-numberbox" name="discount" data-options="required:true,min:0,precision:2"/>
+                        </td>
+                        <td>购卡人:</td>
+                        <td>
+                            <input class="easyui-textbox" name="cardBuyer" data-options="required:true"/>
+                        </td>
                     </tr>
                 </table>
 
@@ -287,6 +310,20 @@
                     <td>油品:</td>
                     <td>
                         <input class="easyui-textbox" name="oils" data-options="required:true"/>
+                    </td>
+                    <td>客户编号:</td>
+                    <td>
+                        <input class="easyui-textbox" name="customerCode" data-options="required:true"/>
+                    </td>
+                </tr>
+                <tr>
+                    <td>折扣:</td>
+                    <td>
+                        <input class="easyui-numberbox" name="discount" data-options="required:true,min:0,precision:2"/>
+                    </td>
+                    <td>购卡人:</td>
+                    <td>
+                        <input class="easyui-textbox" name="cardBuyer" data-options="required:true"/>
                     </td>
                 </tr>
             </table>

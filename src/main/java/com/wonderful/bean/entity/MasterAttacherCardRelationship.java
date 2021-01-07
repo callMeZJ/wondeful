@@ -38,6 +38,12 @@ public class MasterAttacherCardRelationship {
 
     private String oils;
 
+    private String customerCode;
+
+    private BigDecimal discount;
+
+    private String cardBuyer;
+
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;
