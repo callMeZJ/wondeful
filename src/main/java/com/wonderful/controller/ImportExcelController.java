@@ -3,11 +3,14 @@ package com.wonderful.controller;
 import com.alibaba.excel.EasyExcel;
 import com.wonderful.bean.dto.AttacherCardOfficialAccountSaleDetailsImportDTO;
 import com.wonderful.bean.dto.AttacherCardSaleDetailsImportDTO;
+import com.wonderful.bean.dto.MasterAttacherCardRelationshipImportDTO;
 import com.wonderful.bean.entity.AttacherCardSaleDetails;
 import com.wonderful.service.AttacherCardOfficialAccountSaleDetailsService;
 import com.wonderful.service.AttacherCardSaleDetailsService;
+import com.wonderful.service.MasterAttacherCardRelationshipService;
 import com.wonderful.service.excel.in.AttacherCardOfficialAccountSaleDetailsListener;
 import com.wonderful.service.excel.in.AttacherCardSaleDetailsListener;
+import com.wonderful.service.excel.in.MasterAttacherCardRelationshipListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,6 +27,8 @@ public class ImportExcelController {
     private AttacherCardSaleDetailsService attacherCardSaleDetailsService;
     @Autowired
     private AttacherCardOfficialAccountSaleDetailsService attacherCardOfficialAccountSaleDetailsService;
+    @Autowired
+    private MasterAttacherCardRelationshipService masterAttacherCardRelationshipService;
 
     /**
      * 读取 excel
@@ -47,14 +52,20 @@ public class ImportExcelController {
         return "导入成功";
     }
 
-    /**
-     * 读取 excel
-     * @return
-     */
     @PostMapping("attacherCardOfficialAccountSaleDetailsUpload")
     public String upload4AttacherCardOfficialAccountSaleDetails(MultipartFile file) throws IOException {
 
         EasyExcel.read(file.getInputStream(), AttacherCardOfficialAccountSaleDetailsImportDTO.class, new AttacherCardOfficialAccountSaleDetailsListener(attacherCardOfficialAccountSaleDetailsService))
+                .sheet()
+                .doRead();
+
+        return "导入成功";
+    }
+
+    @PostMapping("masterAttacherCardRelationshipUpload")
+    public String upload4MasterAttacherCardRelationship(MultipartFile file) throws IOException {
+
+        EasyExcel.read(file.getInputStream(), MasterAttacherCardRelationshipImportDTO.class, new MasterAttacherCardRelationshipListener(masterAttacherCardRelationshipService))
                 .sheet()
                 .doRead();
 

@@ -130,7 +130,53 @@
         }
 
         function Import() {
-            alert('导入excel');
+
+            $('#importDialog').dialog({
+                title: '导入文件',
+                width: 400,
+                height: 200,
+                closed: false,
+                cache: false,
+                content :'<form method="post" id="importForm" enctype="multipart/form-data">'
+                    +'<div style=" text-align: center;line-height:100px ;">'
+                    +'导入文件： <input class="easyui-filebox" name="file" prompt="选择文件..." buttonText="选择文件" accept="application/vnd.ms-excel" style="width:260px;height:30px" data-options="required:true">'
+                    +'</div></form>',
+                modal: true,
+                buttons:[{
+                    text:'导入',
+                    handler:function(){
+                        if (!$("#importForm").form('validate')){
+                            return;
+                        }
+                        $("#importForm").form('submit',{
+                            timeout:3000000,
+                            type:'post',
+                            url:'/importExcel/masterAttacherCardRelationshipUpload',
+                            success:function(data){
+                                $.messager.progress('close');
+                                $.messager.alert('提示','导入成功','info');
+                                $('#importDialog').dialog('close');
+                                $('#masterAttacherCardRelationshipDg').datagrid('reload');
+
+                            },
+                            error: function(XmlHttpRequest, textStatus, errorThrown){
+                                $.messager.progress('close');
+                                $.messager.alert('提示','导入失败','info');
+                            }
+                        });
+                        $.messager.progress({
+                            title: '提示',
+                            msg: '文件上传中，请稍候……',
+                            text: ''
+                        });
+                    }
+                },{
+                    text:'关闭',
+                    handler:function(){
+                        $('#importDialog').dialog('close');
+                    }
+                }]
+            });
         }
 
         function addSubmit() {
@@ -335,7 +381,7 @@
         </form>
     </div>
 
-
+    <div id="importDialog"></div>
 
 </div>
 </body>
