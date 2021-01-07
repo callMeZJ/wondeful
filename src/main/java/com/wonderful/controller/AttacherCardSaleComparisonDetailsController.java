@@ -18,6 +18,7 @@ import org.springframework.util.CollectionUtils;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import java.math.BigDecimal;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.List;
@@ -109,15 +110,17 @@ public class AttacherCardSaleComparisonDetailsController {
 
             String masterCardNum = !CollectionUtils.isEmpty(collect) && !StringUtils.isEmpty(collect.get(0).getMasterCardNum()) ? collect.get(0).getMasterCardNum() : "";
             String oils = !CollectionUtils.isEmpty(collect) && !StringUtils.isEmpty(collect.get(0).getOils()) ? collect.get(0).getOils() : "";
+            String cardBuyer = !CollectionUtils.isEmpty(collect) && !StringUtils.isEmpty(collect.get(0).getCardBuyer()) ? collect.get(0).getCardBuyer() : "";
+            BigDecimal discount = !CollectionUtils.isEmpty(collect) && !StringUtils.isEmpty(collect.get(0).getDiscount()) ? collect.get(0).getDiscount() : null;
 
             AttacherCardSaleComparisonDetails build = AttacherCardSaleComparisonDetails.builder()
                     .id(o.getId())
                     .date(o.getTransactionTime().toLocalDate())
                     .cardNum(o.getCardNum())
-                    .cardBuyer(null)//抓取
+                    .cardBuyer(cardBuyer)//抓取
                     .masterCardNum(masterCardNum)
                     .rechargeAmount(o.getDistributionAmount())//石化的分配金额-公众号的充值金额
-                    .discount(null)//抓取
+                    .discount(discount)//抓取
                     .realPayAmount(null)//公众号的充值金额-公众号的付款金额
                     .payWay(null)//匹配上的就是公众号，匹配不上的下拉选
                     .payTime(null)//匹配上的就是公众号的生成时间

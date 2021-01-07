@@ -45,7 +45,7 @@ public class AttacherCardSaleComparisonDetails {
 
     private BigDecimal payAmount;
 
-    private Integer discount;
+    private BigDecimal discount;
 
     private BigDecimal realPayAmount;
 

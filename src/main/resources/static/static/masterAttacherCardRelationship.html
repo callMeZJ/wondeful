@@ -21,7 +21,7 @@
                     {field:'status',title:'状态',width:50},
                     {field:'oils',title:'油品',width:50},
                     {field:'customerCode',title:'客户编码',width:50},
-                    {field:'discount',title:'折扣',width:50},
+                    {field:'discount',title:'折扣',width:50,formatter: function(value,row,index){return value+"%"}},
                     {field:'cardBuyer',title:'购卡人',width:50},
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
                             var operation = "<a onclick='Edit(" + row.id + ")'>修改</a> | <a onclick='Delete(" + row.id + ")'>删除</a>";
