@@ -3,13 +3,16 @@ package com.wonderful.controller;
 import com.alibaba.excel.EasyExcel;
 import com.wonderful.bean.dto.AttacherCardOfficialAccountSaleDetailsImportDTO;
 import com.wonderful.bean.dto.AttacherCardSaleDetailsImportDTO;
+import com.wonderful.bean.dto.CustomerInfoImportDTO;
 import com.wonderful.bean.dto.MasterAttacherCardRelationshipImportDTO;
 import com.wonderful.bean.entity.AttacherCardSaleDetails;
 import com.wonderful.service.AttacherCardOfficialAccountSaleDetailsService;
 import com.wonderful.service.AttacherCardSaleDetailsService;
+import com.wonderful.service.CustomerInfoService;
 import com.wonderful.service.MasterAttacherCardRelationshipService;
 import com.wonderful.service.excel.in.AttacherCardOfficialAccountSaleDetailsListener;
 import com.wonderful.service.excel.in.AttacherCardSaleDetailsListener;
+import com.wonderful.service.excel.in.CustomerInfoListener;
 import com.wonderful.service.excel.in.MasterAttacherCardRelationshipListener;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -29,12 +32,14 @@ public class ImportExcelController {
     private AttacherCardOfficialAccountSaleDetailsService attacherCardOfficialAccountSaleDetailsService;
     @Autowired
     private MasterAttacherCardRelationshipService masterAttacherCardRelationshipService;
+    @Autowired
+    private CustomerInfoService customerInfoService;
 
     /**
      * 读取 excel
      * @return
      */
-    @PostMapping("attacherCardSaleDetailsUpload")
+    @PostMapping("/attacherCardSaleDetailsUpload")
     public String upload(MultipartFile file) throws IOException {
 
         //写法1
@@ -52,7 +57,7 @@ public class ImportExcelController {
         return "导入成功";
     }
 
-    @PostMapping("attacherCardOfficialAccountSaleDetailsUpload")
+    @PostMapping("/attacherCardOfficialAccountSaleDetailsUpload")
     public String upload4AttacherCardOfficialAccountSaleDetails(MultipartFile file) throws IOException {
 
         EasyExcel.read(file.getInputStream(), AttacherCardOfficialAccountSaleDetailsImportDTO.class, new AttacherCardOfficialAccountSaleDetailsListener(attacherCardOfficialAccountSaleDetailsService))
@@ -62,10 +67,20 @@ public class ImportExcelController {
         return "导入成功";
     }
 
-    @PostMapping("masterAttacherCardRelationshipUpload")
+    @PostMapping("/masterAttacherCardRelationshipUpload")
     public String upload4MasterAttacherCardRelationship(MultipartFile file) throws IOException {
 
         EasyExcel.read(file.getInputStream(), MasterAttacherCardRelationshipImportDTO.class, new MasterAttacherCardRelationshipListener(masterAttacherCardRelationshipService))
+                .sheet()
+                .doRead();
+
+        return "导入成功";
+    }
+
+    @PostMapping("/customerInfoUpload")
+    public String upload4CustomerInfo(MultipartFile file) throws IOException {
+
+        EasyExcel.read(file.getInputStream(), CustomerInfoImportDTO.class, new CustomerInfoListener(customerInfoService))
                 .sheet()
                 .doRead();
 
