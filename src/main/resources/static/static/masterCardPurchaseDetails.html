@@ -131,6 +131,21 @@
             $('#AddWin').window('open');
         }
 
+        function Export() {
+            var openCardCompanyName = $('#masterCardPurchaseDetailsSearchOpenCardCompanyName').textbox('getValue');
+            var masterCardNum = $('#masterCardPurchaseDetailsSearchMasterCardNum').textbox('getValue');
+            var jsonObj={
+                'openCardCompanyName':openCardCompanyName,
+                'masterCardNum' :masterCardNum,
+                'page':1,
+                'rows':100000
+            };
+            var jsonStr = JSON.stringify(jsonObj);
+            var encrypted = window.btoa(jsonStr);
+            window.location.href = "/exportExcel/masterCardPurchaseDetailsExport?encrypted="+encrypted;
+
+        }
+
         function addSubmit() {
             // 显示进度条
             $.messager.progress();
@@ -221,6 +236,7 @@
            <button class="easyui-linkbutton"  onclick="Search()" data-options="iconCls:'icon-search'">搜索</button>
            <button class="easyui-linkbutton"  onclick="Clear()" data-options="iconCls:'icon-clear'">重置</button>
            <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit'">新增</button>
+           <button class="easyui-linkbutton" onclick="Export()" data-options="iconCls:'icon-redo'">导出</button>
         </div>
     </table>
 

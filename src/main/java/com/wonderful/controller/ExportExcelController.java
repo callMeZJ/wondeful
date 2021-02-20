@@ -32,8 +32,8 @@ public class ExportExcelController {
     @Autowired
     private MasterCardPurchaseDetailsService masterCardPurchaseDetailsService;
 
-    @GetMapping(value = "/masterCardPurchaseDetailsExport/{encrypted}")
-    public String masterCardPurchaseDetailsExport(@PathVariable String encrypted, HttpServletResponse response) throws UnsupportedEncodingException {
+    @GetMapping(value = "/masterCardPurchaseDetailsExport")
+    public String masterCardPurchaseDetailsExport(@RequestParam(value = "encrypted") String encrypted, HttpServletResponse response) throws UnsupportedEncodingException {
         //AtomicInteger原子操作类，导出流输出完之前不允许多次调用点击
         if (exportCount.incrementAndGet() > 1) {
             return "导出失败，重复导出";
