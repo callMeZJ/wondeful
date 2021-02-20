@@ -140,7 +140,7 @@ public class AttacherCardSaleComparisonDetailsController {
             return "石化全量记录同步失败";
         }
 
-        //查询未同步的公众号记录
+        //查询未比对的公众号记录
         List<AttacherCardOfficialAccountSaleDetails> list2 = attacherCardOfficialAccountSaleDetailsService.getIsNotComparison();
         if(CollectionUtils.isEmpty(list2)){
             return "暂无公众号记录需要比对";
