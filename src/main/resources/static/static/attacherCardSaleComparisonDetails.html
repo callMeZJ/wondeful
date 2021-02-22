@@ -127,6 +127,20 @@
             queryParams.masterCardNum = masterCardNum;
             $('#attacherCardSaleComparisonDetailsDg').datagrid('reload');
         }
+
+        function Export() {
+            var cardNum = $('#attacherCardSaleComparisonDetailsSearchCardNum').textbox('getValue');
+            var masterCardNum = $('#attacherCardSaleComparisonDetailsSearchMasterCardNum').textbox('getValue');
+            var jsonObj={
+                'cardNum':cardNum,
+                'masterCardNum' :masterCardNum,
+                'page':1,
+                'rows':100000
+            };
+            var jsonStr = JSON.stringify(jsonObj);
+            var encrypted = window.btoa(jsonStr);
+            window.location.href = "/exportExcel/attacherCardSaleComparisonDetailsExport?encrypted="+encrypted;
+        }
         
         function Clear() {
             $("#attacherCardSaleComparisonDetailsSearchCardNum").textbox('setValue', '');
@@ -194,6 +208,7 @@
            <input id="attacherCardSaleComparisonDetailsSearchMasterCardNum" type="text" class="easyui-textbox" data-options="prompt:'请输入主卡号..',iconCls:'icon-tip'"></input>
            <button class="easyui-linkbutton"  onclick="Search()" data-options="iconCls:'icon-search'">搜索</button>
            <button class="easyui-linkbutton"  onclick="Clear()" data-options="iconCls:'icon-clear'">重置</button>
+           <button class="easyui-linkbutton" onclick="Export()" data-options="iconCls:'icon-redo'">导出</button>
         </div>
     </table>
 
