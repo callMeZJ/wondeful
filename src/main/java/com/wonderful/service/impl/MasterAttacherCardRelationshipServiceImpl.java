@@ -13,6 +13,7 @@ import com.wonderful.dao.MasterAttacherCardRelationshipMapper;
 import com.wonderful.dao.MasterCardOpenBillDetailsMapper;
 import com.wonderful.service.MasterAttacherCardRelationshipService;
 import com.wonderful.service.MasterCardOpenBillDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,6 +21,9 @@ import java.util.List;
 
 @Service
 public class MasterAttacherCardRelationshipServiceImpl extends ServiceImpl<MasterAttacherCardRelationshipMapper, MasterAttacherCardRelationship> implements MasterAttacherCardRelationshipService {
+
+    @Autowired
+    private MasterAttacherCardRelationshipMapper masterAttacherCardRelationshipMapper;
 
     @Override
     public IPage<MasterAttacherCardRelationship> page(MasterAttacherCardRelationshipDTO masterAttacherCardRelationshipDTO) {
@@ -56,5 +60,10 @@ public class MasterAttacherCardRelationshipServiceImpl extends ServiceImpl<Maste
         List<MasterAttacherCardRelationship> masterAttacherCardRelationships = this.baseMapper.selectList(wrapper);
 
         return masterAttacherCardRelationships;
+    }
+
+    @Override
+    public void updateIsUse() {
+        masterAttacherCardRelationshipMapper.updateIsUse();
     }
 }

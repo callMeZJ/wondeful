@@ -23,6 +23,14 @@
                     {field:'customerCode',title:'客户编码',width:50},
                     {field:'discount',title:'折扣',width:50,formatter: function(value,row,index){return value+"%"}},
                     {field:'cardBuyer',title:'购卡人',width:50},
+                    {field:'isUse',title:'是否使用过',width:50,align:'center',formatter:function (value, row, index) {
+                            if(value == 'yes'){
+                                return '使用过';
+                            }else{
+                                return '未用过';
+                            }
+                        }
+                    },
                     {field:'operation',title:'操作',width:50,align:'center',formatter:function (value, row, index) {
                             var operation = "<a onclick='Edit(" + row.id + ")'>修改</a> | <a onclick='Delete(" + row.id + ")'>删除</a>";
                             return operation;
@@ -41,6 +49,11 @@
                 queryParams: {
                     masterCardNum: '',
                     attacherCardNum:''
+                },
+                rowStyler: function(index,row){
+                    if (row.isUse == 'yes'){
+                        return 'background-color:#DC143C;color:#fff;';
+                    }
                 }
 
             });
@@ -258,6 +271,7 @@
             <th field="customerCode" width="50">客户编码</th>
             <th field="discount" width="50">折扣</th>
             <th field="cardBuyer" width="50">购卡人</th>
+            <th field="isUse" width="50">是否使用过</th>
             <th field="operation" width="50">操作</th>
         </tr>
         </thead>

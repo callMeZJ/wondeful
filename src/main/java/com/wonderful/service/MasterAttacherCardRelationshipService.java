@@ -18,4 +18,6 @@ public interface MasterAttacherCardRelationshipService extends IService<MasterAt
     List<MasterAttacherCardRelationship> getByMasterCardNumList(List<String> masterCardNumList);
 
     List<MasterAttacherCardRelationship> getByAttacherCardNumList(List<String> cardNumList);
+
+    void updateIsUse();
 }

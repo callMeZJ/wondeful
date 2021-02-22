@@ -44,6 +44,8 @@ public class MasterAttacherCardRelationship {
 
     private String cardBuyer;
 
+    private String isUse;
+
     @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
     @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
     private LocalDateTime updateTime;

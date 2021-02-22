@@ -25,6 +25,9 @@ public class MasterAttacherCardRelationshipController {
     @PostMapping("/page")
     public Map<String, Object> page(MasterAttacherCardRelationshipDTO masterAttacherCardRelationshipDTO){
 
+        //检测副卡是否已经消费过
+        masterAttacherCardRelationshipService.updateIsUse();
+
         Map<String, Object> map = new HashMap<>();
 
         IPage<MasterAttacherCardRelationship> page = masterAttacherCardRelationshipService.page(masterAttacherCardRelationshipDTO);
@@ -73,6 +76,13 @@ public class MasterAttacherCardRelationshipController {
         MasterAttacherCardRelationship masterAttacherCardRelationship = masterAttacherCardRelationshipService.getById(id);
 
         return masterAttacherCardRelationship;
+
+    }
+
+    @GetMapping("/updateIsUse")
+    public void updateIsUse(){
+
+        masterAttacherCardRelationshipService.updateIsUse();
 
     }
 }
