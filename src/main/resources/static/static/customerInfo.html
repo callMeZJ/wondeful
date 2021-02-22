@@ -137,6 +137,20 @@
             $('#AddWin').window('open');
         }
 
+        function Export() {
+            var customerName = $('#customerInfoSearchCustomerName').textbox('getValue');
+            var telNum = $('#customerInfoSearchTelNum').textbox('getValue');
+            var jsonObj={
+                'customerName':customerName,
+                'telNum' :telNum,
+                'page':1,
+                'rows':100000
+            };
+            var jsonStr = JSON.stringify(jsonObj);
+            var encrypted = window.btoa(unescape(encodeURIComponent(jsonStr)));
+            window.location.href = "/exportExcel/customerInfoExport?encrypted="+encrypted;
+        }
+
         function Import() {
 
             $('#importDialog').dialog({
@@ -281,6 +295,7 @@
             <button class="easyui-linkbutton"  onclick="Clear()" data-options="iconCls:'icon-clear'">重置</button>
             <button class="easyui-linkbutton" onclick="Save()" data-options="iconCls:'icon-edit'">新增</button>
             <button class="easyui-linkbutton" onclick="Import()" data-options="iconCls:'icon-filter'">导入</button>
+            <button class="easyui-linkbutton" onclick="Export()" data-options="iconCls:'icon-redo'">导出</button>
         </div>
     </table>
 

@@ -138,7 +138,7 @@
                 'rows':100000
             };
             var jsonStr = JSON.stringify(jsonObj);
-            var encrypted = window.btoa(jsonStr);
+            var encrypted = window.btoa(unescape(encodeURIComponent(jsonStr)));
             window.location.href = "/exportExcel/attacherCardSaleComparisonDetailsExport?encrypted="+encrypted;
         }
         
