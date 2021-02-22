@@ -7,14 +7,8 @@ import com.alibaba.excel.support.ExcelTypeEnum;
 import com.alibaba.fastjson.JSON;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.wonderful.bean.dto.*;
-import com.wonderful.bean.entity.AttacherCardPointDetails;
-import com.wonderful.bean.entity.AttacherCardSaleComparisonDetails;
-import com.wonderful.bean.entity.CustomerInfo;
-import com.wonderful.bean.entity.MasterCardPurchaseDetails;
-import com.wonderful.service.AttacherCardPointDetailsService;
-import com.wonderful.service.AttacherCardSaleComparisonDetailsService;
-import com.wonderful.service.CustomerInfoService;
-import com.wonderful.service.MasterCardPurchaseDetailsService;
+import com.wonderful.bean.entity.*;
+import com.wonderful.service.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -43,6 +37,8 @@ public class ExportExcelController {
     private AttacherCardSaleComparisonDetailsService attacherCardSaleComparisonDetailsService;
     @Autowired
     private CustomerInfoService customerInfoService;
+    @Autowired
+    private CapitalFlowService capitalFlowService;
 
     @GetMapping(value = "/masterCardPurchaseDetailsExport")
     public String masterCardPurchaseDetailsExport(@RequestParam(value = "encrypted") String encrypted, HttpServletResponse response) throws UnsupportedEncodingException {
@@ -214,6 +210,53 @@ public class ExportExcelController {
             List<CustomerInfoExportDTO> content = records.stream().map(o -> {
                 CustomerInfoExportDTO customerInfoExportDTO = BeanUtil.toBean(o, CustomerInfoExportDTO.class);
                 return customerInfoExportDTO;
+            }).collect(Collectors.toList());
+
+            //导出
+            ServletOutputStream out = response.getOutputStream();
+            ExcelWriter writer = new ExcelWriter(out, ExcelTypeEnum.XLSX, true);
+            writer.write(content, sheet);
+            writer.finish();
+            out.flush();
+        } catch (Exception e) {
+            e.printStackTrace();
+            return "导出失败";
+        } finally {
+            //导出流结束，计数归0
+            exportCount.set(0);
+        }
+        return "导出成功";
+    }
+
+    @GetMapping(value = "/capitalFlowExport")
+    public String capitalFlowExport(@RequestParam(value = "encrypted") String encrypted, HttpServletResponse response) throws UnsupportedEncodingException {
+        //AtomicInteger原子操作类，导出流输出完之前不允许多次调用点击
+        if (exportCount.incrementAndGet() > 1) {
+            return "导出失败，重复导出";
+        }
+        Sheet sheet = new Sheet(1, 0, CapitalFlowExportDTO.class);
+        //设置自适应宽度
+        sheet.setAutoWidth(Boolean.TRUE);
+        String fileName = String.format("资金流水%s", LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyyMMddHHmmss")));
+        //通知浏览器以附件的形式下载处理
+        response.setCharacterEncoding("utf-8");
+        response.setHeader("Content-disposition", "attachment;filename=" + new String(fileName.getBytes("utf-8"),"iso-8859-1") + ".xlsx");
+        response.setContentType("multipart/form-data");
+        try {
+            //获取要导出的数据
+            //将空格替换为+，
+            String str = encrypted.replaceAll(" +","+");
+            //回车换行去掉
+            String decrypted = new String(Base64.getDecoder().decode(str.replace("\r\n", "")),"utf-8");
+            CapitalFlowDTO capitalFlowDTO = JSON.parseObject(decrypted, CapitalFlowDTO.class);
+            IPage<CapitalFlow> page = capitalFlowService.page(capitalFlowDTO);
+            List<CapitalFlow> records = page.getRecords();
+            if (records.size() == 0) {
+                return "暂无数据导出";
+            }
+            List<CapitalFlowExportDTO> content = records.stream().map(o -> {
+                CapitalFlowExportDTO capitalFlowExportDTO = BeanUtil.toBean(o, CapitalFlowExportDTO.class);
+                return capitalFlowExportDTO;
             }).collect(Collectors.toList());
 
             //导出
