@@ -80,6 +80,7 @@ public class AttacherCardSaleComparisonDetailsServiceImpl extends ServiceImpl<At
             PayServiceCharge payServiceCharge = payServiceChargeService.getServiceFeeByWay("公众号");
             BigDecimal serviceFee = Objects.nonNull(payServiceCharge) ? payServiceCharge.getServiceFee() : BigDecimal.ONE;
 
+            //此处get(0)是因为按照业务上来说，只会有一条匹配上
             AttacherCardSaleComparisonDetails attacherCardSaleComparisonDetails = attacherCardSaleComparisonDetailsList.get(0);
 
             attacherCardSaleComparisonDetails.setIsComparison("yes");
@@ -120,6 +121,16 @@ public class AttacherCardSaleComparisonDetailsServiceImpl extends ServiceImpl<At
         boolean b1 = attacherCardSaleDetailsService.saveOrUpdateBatch(collect);
 
         return b&&b1;
+    }
+
+    @Override
+    public List<AttacherCardSaleComparisonDetails> getByAttacherCardNumList(List<String> attacherCardNumList) {
+
+        LambdaQueryWrapper<AttacherCardSaleComparisonDetails> wrapper = new LambdaQueryWrapper<AttacherCardSaleComparisonDetails>();
+        wrapper.in(AttacherCardSaleComparisonDetails::getCardNum,attacherCardNumList);
+        List<AttacherCardSaleComparisonDetails> attacherCardSaleComparisonDetails = this.baseMapper.selectList(wrapper);
+
+        return attacherCardSaleComparisonDetails;
     }
 
 }
