@@ -1,5 +1,9 @@
 package com.wonderful.bean.dto;
 
+import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
+import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.wonderful.common.CustomLocalDateTimeDeserializer;
+import com.wonderful.common.CustomLocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -7,6 +11,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
 
 @Builder
 @Data
@@ -24,9 +29,13 @@ public class AttacherCardSaleDetailsSummaryDTO {
 
     private String cardBuyer;
 
-    private Timestamp cardBuyTime;
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    private LocalDateTime cardBuyTime;
 
-    private Timestamp changeCardTime;
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    private LocalDateTime changeCardTime;
 
     private BigDecimal discount;
 
@@ -48,11 +57,15 @@ public class AttacherCardSaleDetailsSummaryDTO {
 
     private BigDecimal rechargePoint;
 
-    private Timestamp firstRechargeTime;
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    private LocalDateTime firstRechargeTime;
 
     private Integer rechargeTimes;
 
-    private Timestamp lastRechargeTime;
+    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
+    private LocalDateTime lastRechargeTime;
 
     private Integer page;
 

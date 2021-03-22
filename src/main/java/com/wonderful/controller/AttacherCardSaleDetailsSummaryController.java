@@ -19,7 +19,7 @@ public class AttacherCardSaleDetailsSummaryController {
     private AttacherCardSaleDetailsSummaryService attacherCardSaleDetailsSummaryService;
 
     @PostMapping("/page")
-    public Map<String, Object> page(@RequestBody  AttacherCardSaleDetailsSummaryDTO attacherCardSaleDetailsSummaryDTO){
+    public Map<String, Object> page(AttacherCardSaleDetailsSummaryDTO attacherCardSaleDetailsSummaryDTO){
 
         Map<String, Object> map = new HashMap<>();
 
