@@ -32,6 +32,8 @@ public class AttacherCardSaleComparisonDetailsDTO {
 
     private BigInteger comparisonAttacherCardOfficialAccountSaleDetailsId;
 
+    private String customerNum;
+
     private Date date;
 
     private String cardNum;

@@ -90,6 +90,8 @@ public class AttacherCardSaleComparisonDetailsServiceImpl extends ServiceImpl<At
             attacherCardSaleComparisonDetails.setPayWay("公众号");
             attacherCardSaleComparisonDetails.setPayTime(attacherCardOfficialAccountSaleDetails.getGenerationTime());
             attacherCardSaleComparisonDetails.setComparisonAttacherCardOfficialAccountSaleDetailsId(attacherCardOfficialAccountSaleDetails.getId());
+            //匹配上的把公众号销售记录中的用户编码存入，方便在石化销售明细汇总时抓取用户数据
+            attacherCardSaleComparisonDetails.setCustomerNum(attacherCardOfficialAccountSaleDetails.getCustomerNum());
             this.updateById(attacherCardSaleComparisonDetails);
 
             attacherCardOfficialAccountSaleDetails.setIsComparison("yes");

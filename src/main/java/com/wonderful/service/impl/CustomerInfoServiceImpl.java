@@ -11,6 +11,8 @@ import com.wonderful.service.CustomerInfoService;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
+import java.util.List;
+
 @Service
 public class CustomerInfoServiceImpl extends ServiceImpl<CustomerInfoMapper, CustomerInfo> implements CustomerInfoService {
 
@@ -29,5 +31,13 @@ public class CustomerInfoServiceImpl extends ServiceImpl<CustomerInfoMapper, Cus
         IPage<CustomerInfo> p = this.baseMapper.selectPage(page, wrapper);
 
         return p;
+    }
+
+    @Override
+    public List<CustomerInfo> getByCustomerNum(List<String> customerNums) {
+        LambdaQueryWrapper<CustomerInfo> wrapper = new LambdaQueryWrapper<CustomerInfo>();
+        wrapper.in(CustomerInfo::getCustomerNum,customerNums);
+        List<CustomerInfo> customerInfos = this.baseMapper.selectList(wrapper);
+        return customerInfos;
     }
 }

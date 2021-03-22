@@ -17,4 +17,6 @@ public interface AttacherCardSaleComparisonDetailsService extends IService<Attac
     void updateMatched(AttacherCardOfficialAccountSaleDetails attacherCardOfficialAccountSaleDetails);
 
     boolean saveAndUpdateOther(List<AttacherCardSaleComparisonDetails> attacherCardSaleComparisonDetailsList);
+
+    List<AttacherCardSaleComparisonDetails> getByAttacherCardNumList(List<String> attacherCardNumList);
 }

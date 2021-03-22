@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.wonderful.bean.dto.AttacherCardSaleDetailsDTO;
+import com.wonderful.bean.dto.AttacherCardSaleDetailsSummaryDTO;
 import com.wonderful.bean.dto.MasterCardPurchaseDetailsDTO;
 import com.wonderful.bean.entity.AttacherCardSaleDetails;
 import com.wonderful.bean.entity.MasterCardPurchaseDetails;
@@ -12,6 +13,7 @@ import com.wonderful.dao.AttacherCardSaleDetailsMapper;
 import com.wonderful.dao.MasterCardPurchaseDetailsMapper;
 import com.wonderful.service.AttacherCardSaleDetailsService;
 import com.wonderful.service.MasterCardPurchaseDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -19,6 +21,9 @@ import java.util.List;
 
 @Service
 public class AttacherCardSaleDetailsServiceImpl extends ServiceImpl<AttacherCardSaleDetailsMapper, AttacherCardSaleDetails> implements AttacherCardSaleDetailsService {
+
+    @Autowired
+    private AttacherCardSaleDetailsMapper attacherCardSaleDetailsMapper;
 
     @Override
     public IPage<AttacherCardSaleDetails> page(AttacherCardSaleDetailsDTO attacherCardSaleDetailsDTO) {
@@ -35,6 +40,18 @@ public class AttacherCardSaleDetailsServiceImpl extends ServiceImpl<AttacherCard
         IPage<AttacherCardSaleDetails> p = this.baseMapper.selectPage(page, wrapper);
 
         return p;
+    }
+
+    @Override
+    public IPage<AttacherCardSaleDetailsSummaryDTO> pageForSummary(AttacherCardSaleDetailsDTO attacherCardSaleDetailsDTO) {
+
+        Page page = new Page();
+        page.setCurrent(attacherCardSaleDetailsDTO.getPage());
+        page.setSize(attacherCardSaleDetailsDTO.getRows());
+
+        IPage<AttacherCardSaleDetailsSummaryDTO> pageForSummary = attacherCardSaleDetailsMapper.pageForSummary(page, attacherCardSaleDetailsDTO.getCardNum());
+
+        return pageForSummary;
     }
 
     @Override

@@ -31,6 +31,8 @@ public class AttacherCardSaleComparisonDetails {
 
     private BigInteger comparisonAttacherCardOfficialAccountSaleDetailsId;
 
+    private String customerNum;
+
     @JsonSerialize(using = CustomLocalDateSerializer.class)
     @JsonDeserialize(using = CustomLocalDateDeserializer.class)
     private LocalDate date;
