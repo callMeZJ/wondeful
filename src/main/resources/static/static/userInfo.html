@@ -134,17 +134,17 @@
                     return isValid;
                 },
                 success: function(data){
-                    if(data != true){
+                    if(data == 'true'){
                         // 如果提交成功则隐藏进度条
                         $.messager.progress('close');
-                        $.messager.alert('提示','该用户已存在','info');
+                        $.messager.alert('提示','新增成功','info');
                         $('#AddForm').form('clear')
                         $('#AddWin').window('close');
                         $('#userInfoDg').datagrid('reload');
                     }else{
                         // 如果提交成功则隐藏进度条
                         $.messager.progress('close');
-                        $.messager.alert('提示','新增成功','info');
+                        $.messager.alert('提示','该用户已存在','info');
                         $('#AddForm').form('clear')
                         $('#AddWin').window('close');
                         $('#userInfoDg').datagrid('reload');
