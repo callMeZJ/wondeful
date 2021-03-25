@@ -110,9 +110,6 @@ public class SysUserController {
             //刷入缓存
             userCacheService.get(sysUserDTO.getName());
             userInterceptor.flagSet.add(sysUserDTO.getName());
-            //获取本机名称并且记录
-            String hostName = InetAddress.getLocalHost().getHostName();
-            userInterceptor.hostNameSet.add(hostName);
             //推入清除缓存的延时队列
             rabbitTemplate.convertAndSend("delay.clear.cache.e", "delay_clear_cache_routing_key", sysUserDTO.getName(), message -> {
                 //1个小时
@@ -129,9 +126,6 @@ public class SysUserController {
     @GetMapping("/logout")
     public void loginout(@RequestParam String key) throws UnknownHostException {
 
-        String hostName = InetAddress.getLocalHost().getHostName();
-        userInterceptor.hostNameSet.remove(hostName);
-
         userCacheService.delete(key);
         userInterceptor.flagSet.remove(key);
     }
@@ -139,15 +133,6 @@ public class SysUserController {
     //清除缓存
     @RabbitListener(queues = "dead.letter.clear.cache.q")
     public void clearCache(String key){
-
-        String hostName = null;
-        try {
-            hostName = InetAddress.getLocalHost().getHostName();
-        } catch (UnknownHostException e) {
-            e.printStackTrace();
-            System.err.println("rabbitmq清除机器名报错");
-        }
-        userInterceptor.hostNameSet.remove(hostName);
 
         userCacheService.delete(key);
         userInterceptor.flagSet.remove(key);

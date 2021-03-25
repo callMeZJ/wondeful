@@ -8,7 +8,7 @@ import java.util.concurrent.ConcurrentHashMap;
 
 @RestController
 //此接口不开放
-//@RequestMapping("/cache")
+@RequestMapping("/cache")
 public class UserCacheController {
 
     @Autowired

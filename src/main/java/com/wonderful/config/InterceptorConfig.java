@@ -15,7 +15,26 @@ public class InterceptorConfig implements WebMvcConfigurer {
     @Override
     public void addInterceptors(InterceptorRegistry registry) {
         // 自定义拦截器，添加拦截路径和排除拦截路径
-        registry.addInterceptor(userInterceptor).addPathPatterns("/**").excludePathPatterns("/sysUser/login","/sysUser/logout");
+        registry.addInterceptor(userInterceptor).addPathPatterns(
+                "/attacherCardOfficialAccountSaleDetails/**"
+                ,"/attacherCardPointDetails/**"
+                ,"/attacherCardSaleComparisonDetails/**"
+                ,"/attacherCardSaleDetails/**"
+                ,"/attacherCardSaleDetailsSummary/**"
+                ,"/capitalFlow/**"
+                ,"/customerInfo/**"
+                ,"/exportExcel/**"
+                ,"/importExcel/**"
+                ,"/masterAttacherCardRelationship/**"
+                ,"/masterCardOpenBillDetails/**"
+                ,"/masterCardPurchaseDetails/**"
+                ,"/masterCardPurchaseDetailsSummary/**"
+                ,"/matchTime/**"
+                ,"/payServiceCharge/**"
+                ,"/cache/**"
+                ,"/sysUser/**"
+
+        ).excludePathPatterns("/sysUser/login","/sysUser/logout");
     }
 }
 
