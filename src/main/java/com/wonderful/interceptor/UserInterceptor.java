@@ -7,6 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.InetAddress;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -15,6 +16,7 @@ import java.util.concurrent.ConcurrentHashMap;
 public class UserInterceptor implements HandlerInterceptor {
 
     public final static Set<String> flagSet = new HashSet<>();
+    public final static Set<String> hostNameSet = new HashSet<>();
     @Autowired
     private UserCacheService userCacheService;
 
@@ -28,8 +30,19 @@ public class UserInterceptor implements HandlerInterceptor {
         System.err.println(method);
         System.err.println(uri);*/
 
-        ConcurrentHashMap all = userCacheService.getAll();
+        String hostName = InetAddress.getLocalHost().getHostName();
+        boolean contains = hostNameSet.contains(hostName);
+        if(contains){
+            ConcurrentHashMap all = userCacheService.getAll();
+            if(!all.isEmpty()){
+                return flagSet.stream().anyMatch(o -> all.keySet().contains(o));
+            }else{
+                return false;
+            }
+        }else{
+            return false;
+        }
 
-        return flagSet.stream().anyMatch(o -> all.keySet().contains(o));
+
     }
 }
