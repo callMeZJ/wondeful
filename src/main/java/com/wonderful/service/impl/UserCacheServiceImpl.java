@@ -25,7 +25,7 @@ public class UserCacheServiceImpl implements UserCacheService {
     @Cacheable(cacheNames = "user")
     public String get(String key) {
 
-        System.err.println("从map里面取,The cacheManager is" + cacheManager);
+        //System.err.println("从map里面取,The cacheManager is" + cacheManager);
 
         return map.get(key);
     }
