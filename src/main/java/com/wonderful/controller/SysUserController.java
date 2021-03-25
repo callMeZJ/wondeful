@@ -135,10 +135,12 @@ public class SysUserController {
     }
 
     @GetMapping("/logout")
-    public void loginout(@RequestParam String key, HttpServletRequest request) throws UnknownHostException, UnsupportedEncodingException {
+    public void loginout(@RequestParam String key) throws UnknownHostException, UnsupportedEncodingException {
 
-        userCacheService.delete(key);
-        userInterceptor.flagSet.remove(key);
+        String afterKey = new String(Base64.getDecoder().decode(key),"utf-8");
+
+        userCacheService.delete(afterKey);
+        userInterceptor.flagSet.remove(afterKey);
     }
 
     //清除缓存
