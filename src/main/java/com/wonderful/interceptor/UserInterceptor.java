@@ -7,6 +7,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import java.net.URLDecoder;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
@@ -28,13 +29,15 @@ public class UserInterceptor implements HandlerInterceptor {
         System.err.println(method);
         System.err.println(uri);*/
 
-            ConcurrentHashMap all = userCacheService.getAll();
-            if(!all.isEmpty()){
+        String username = URLDecoder.decode(request.getCookies()[0].getValue(), "utf-8");
+
+        ConcurrentHashMap all = userCacheService.getAll();
+        if(!all.isEmpty()){
                 boolean a = all.size()==flagSet.size();
-                boolean b = flagSet.stream().anyMatch(o -> all.keySet().contains(o));
+                boolean b = all.get(username)!=null;
                 return a&&b;
-            }else{
+        }else{
                 return false;
-            }
+        }
     }
 }

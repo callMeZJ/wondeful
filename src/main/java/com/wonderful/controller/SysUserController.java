@@ -15,7 +15,13 @@ import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.io.UnsupportedEncodingException;
 import java.net.InetAddress;
+import java.net.URLDecoder;
+import java.net.URLEncoder;
 import java.net.UnknownHostException;
 import java.time.LocalDateTime;
 import java.util.Base64;
@@ -100,7 +106,7 @@ public class SysUserController {
     }
 
     @PostMapping("/login")
-    public boolean login(@RequestBody SysUserDTO sysUserDTO) throws UnknownHostException {
+    public boolean login(@RequestBody SysUserDTO sysUserDTO, HttpServletResponse response) throws UnknownHostException, UnsupportedEncodingException {
 
         boolean f = sysUserService.getByNameAndPwd(sysUserDTO);
 
@@ -110,6 +116,11 @@ public class SysUserController {
             //刷入缓存
             userCacheService.get(sysUserDTO.getName());
             userInterceptor.flagSet.add(sysUserDTO.getName());
+            //浏览器写入cookie
+            Cookie cookie = new Cookie("username", URLEncoder.encode(sysUserDTO.getName(),"utf-8"));
+            cookie.setMaxAge(3600);
+            cookie.setPath("/");
+            response.addCookie(cookie);
             //推入清除缓存的延时队列
             rabbitTemplate.convertAndSend("delay.clear.cache.e", "delay_clear_cache_routing_key", sysUserDTO.getName(), message -> {
                 //1个小时
@@ -124,7 +135,7 @@ public class SysUserController {
     }
 
     @GetMapping("/logout")
-    public void loginout(@RequestParam String key) throws UnknownHostException {
+    public void loginout(@RequestParam String key, HttpServletRequest request) throws UnknownHostException, UnsupportedEncodingException {
 
         userCacheService.delete(key);
         userInterceptor.flagSet.remove(key);
