@@ -1,6 +1,9 @@
 package com.wonderful.config;
 
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.amqp.core.Binding;
+import org.springframework.amqp.core.BindingBuilder;
+import org.springframework.amqp.core.DirectExchange;
 import org.springframework.amqp.core.Queue;
 import org.springframework.amqp.rabbit.config.SimpleRabbitListenerContainerFactory;
 import org.springframework.amqp.rabbit.connection.CachingConnectionFactory;
@@ -13,6 +16,9 @@ import org.springframework.amqp.support.converter.MessageConverter;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+
+import java.util.HashMap;
+import java.util.Map;
 
 /**
 * 描述:
@@ -93,6 +99,51 @@ public class RabbitConfig {
     @Bean
     public Queue matchingQ() {
         return new Queue("wonderful.matching.q");
+    }
+
+
+
+
+
+    //死信队列（消费此队列）
+    @Bean
+    public Queue deadListenerUpdateStatusQueue() {
+        return new Queue("dead.letter.clear.cache.q");
+    }
+
+    //死信队列交换机
+    @Bean
+    public DirectExchange deadListenerUpdateStatusExchange() {
+        return new DirectExchange("dead.letter.clear.cache.e", true, false);
+    }
+
+    //死信交换机与死信队列绑定
+    @Bean
+    public Binding deadListenerUpdateStatusBinding() {
+        return BindingBuilder.bind(deadListenerUpdateStatusQueue()).to(deadListenerUpdateStatusExchange()).with("dead_letter_clear_cache_routing_key");
+    }
+
+    //延时队列（推入此队列）
+    @Bean
+    public Queue delayListenerUpdateStatusQueue() {
+        Map<String, Object> params = new HashMap<>();
+        //x-dead-letter-exchange声明了队列里的死信转发到的DLX名称
+        params.put("x-dead-letter-exchange", "dead.letter.clear.cache.e");
+        //x-dead-letter-routing-key声明了这些死信在转发时携带的 routing-key名称
+        params.put("x-dead-letter-routing-key", "dead_letter_clear_cache_routing_key");
+        return new Queue("delay.clear.cache.q", true, false, false, params);
+    }
+
+    //延时队列交换机
+    @Bean
+    public DirectExchange delayListenerUpdateStatusExchange() {
+        return new DirectExchange("delay.clear.cache.e", true, false);
+    }
+
+    //延时队列交换机与延时队列绑定
+    @Bean
+    public Binding delayListenerUpdateStatusBinding() {
+        return BindingBuilder.bind(delayListenerUpdateStatusQueue()).to(delayListenerUpdateStatusExchange()).with("delay_clear_cache_routing_key");
     }
 
 }

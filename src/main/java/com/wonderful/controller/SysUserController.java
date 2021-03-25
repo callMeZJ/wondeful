@@ -6,8 +6,12 @@ import com.wonderful.bean.dto.MatchTimeDTO;
 import com.wonderful.bean.dto.SysUserDTO;
 import com.wonderful.bean.entity.MatchTime;
 import com.wonderful.bean.entity.SysUser;
+import com.wonderful.interceptor.UserInterceptor;
 import com.wonderful.service.MatchTimeService;
 import com.wonderful.service.SysUserService;
+import com.wonderful.service.UserCacheService;
+import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,6 +27,12 @@ public class SysUserController {
 
     @Autowired
     private SysUserService sysUserService;
+    @Autowired
+    private UserCacheService userCacheService;
+    @Autowired
+    private UserInterceptor userInterceptor;
+    @Autowired
+    private RabbitTemplate rabbitTemplate;
 
     @PostMapping("/page")
     public Map<String, Object> page(SysUserDTO sysUserDTO){
@@ -92,8 +102,38 @@ public class SysUserController {
 
         boolean f = sysUserService.getByNameAndPwd(sysUserDTO);
 
+        if(f){
+            userCacheService.save(sysUserDTO.getName(),sysUserDTO.getName());
+            //刷入缓存
+            userCacheService.get(sysUserDTO.getName());
+            userInterceptor.flagSet.add(sysUserDTO.getName());
+            //推入清除缓存的延时队列
+            rabbitTemplate.convertAndSend("delay.clear.cache.e", "delay_clear_cache_routing_key", sysUserDTO.getName(), message -> {
+                //1个小时
+                Long millisecond = 3600000l;
+                message.getMessageProperties().setExpiration(millisecond.toString());
+                return message;
+            });
+        }
+
         return f;
 
     }
+
+    @GetMapping("/logout")
+    public void loginout(@RequestParam String key){
+
+        userCacheService.delete(key);
+        userInterceptor.flagSet.remove(key);
+    }
+
+    //清除缓存
+    @RabbitListener(queues = "dead.letter.clear.cache.q")
+    public void clearCache(String key){
+        userCacheService.delete(key);
+        userInterceptor.flagSet.remove(key);
+    }
+
+
 
 }
