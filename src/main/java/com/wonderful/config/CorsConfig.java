@@ -6,10 +6,10 @@ import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import org.springframework.web.filter.CorsFilter;
 
-@Configuration
+//@Configuration
 public class CorsConfig {
 
-    // 当前跨域请求最大有效时长。这里默认30天
+    /*// 当前跨域请求最大有效时长。这里默认30天
     private long maxAge = 30 * 24 * 60 * 60;
 
     private CorsConfiguration buildConfig() {
@@ -29,5 +29,5 @@ public class CorsConfig {
         UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
         source.registerCorsConfiguration("/**", buildConfig()); // 4 对接口配置跨域设置
         return new CorsFilter(source);
-    }
+    }*/
 }
