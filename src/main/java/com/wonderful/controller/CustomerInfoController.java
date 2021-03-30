@@ -6,8 +6,14 @@ import com.wonderful.bean.dto.CustomerInfoDTO;
 import com.wonderful.bean.entity.CustomerInfo;
 import com.wonderful.service.CustomerInfoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.propertyeditors.CustomDateEditor;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.context.request.WebRequest;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
 import java.util.HashMap;
 import java.util.Map;
@@ -18,6 +24,14 @@ public class CustomerInfoController {
 
     @Autowired
     private CustomerInfoService customerInfoService;
+
+    @InitBinder
+    public void initBinder(WebDataBinder binder) {
+
+        //转换日期
+        DateFormat dateFormat=new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        binder.registerCustomEditor(Timestamp.class, new CustomDateEditor(dateFormat, true));
+    }
 
     @PostMapping("/page")
     public Map<String, Object> page(CustomerInfoDTO customerInfoDTO){

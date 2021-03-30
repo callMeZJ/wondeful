@@ -5,6 +5,8 @@ import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import com.fasterxml.jackson.databind.annotation.JsonDeserialize;
 import com.fasterxml.jackson.databind.annotation.JsonSerialize;
+import com.wonderful.common.CustomLocalDateDeserializer;
+import com.wonderful.common.CustomLocalDateSerializer;
 import com.wonderful.common.CustomLocalDateTimeDeserializer;
 import com.wonderful.common.CustomLocalDateTimeSerializer;
 import lombok.AllArgsConstructor;
@@ -14,6 +16,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Builder
@@ -30,9 +33,9 @@ public class MasterAttacherCardRelationship {
 
     private String attacherCardNum;
 
-    @JsonSerialize(using = CustomLocalDateTimeSerializer.class)
-    @JsonDeserialize(using = CustomLocalDateTimeDeserializer.class)
-    private LocalDateTime openCardTime;
+    @JsonSerialize(using = CustomLocalDateSerializer.class)
+    @JsonDeserialize(using = CustomLocalDateDeserializer.class)
+    private LocalDate openCardTime;
 
     private String status;
 

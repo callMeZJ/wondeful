@@ -21,7 +21,11 @@
                     {field:'status',title:'状态',width:50},
                     {field:'oils',title:'油品',width:50},
                     {field:'customerCode',title:'客户编码',width:50},
-                    {field:'discount',title:'折扣',width:50,formatter: function(value,row,index){return value+"%"}},
+                    {field:'discount',title:'折扣',width:50,formatter: function(value,row,index){
+                        if(value!="" && value != null){
+                            return value+"%"
+                        }
+                    }},
                     {field:'cardBuyer',title:'购卡人',width:50},
                     {field:'isUse',title:'是否使用过',width:50,align:'center',formatter:function (value, row, index) {
                             if(value == 'yes'){
@@ -303,7 +307,7 @@
                     <tr>
                         <td>开卡时间:</td>
                         <td>
-                            <input class="easyui-datetimebox" name="openCardTime" data-options="required:true,editable:false"/>
+                            <input class="easyui-datebox" name="openCardTime" data-options="required:true,editable:false"/>
                         </td>
                         <td>状态:</td>
                         <td>
@@ -313,21 +317,21 @@
                     <tr>
                         <td>油品:</td>
                         <td>
-                            <input class="easyui-textbox" name="oils" data-options="required:true"/>
+                            <input class="easyui-textbox" name="oils" />
                         </td>
                         <td>客户编号:</td>
                         <td>
-                            <input class="easyui-textbox" name="customerCode" data-options="required:true"/>
+                            <input class="easyui-textbox" name="customerCode" />
                         </td>
                     </tr>
                     <tr>
                         <td>折扣:</td>
                         <td>
-                            <input class="easyui-numberbox" name="discount" data-options="required:true,min:0,precision:2"/>
+                            <input class="easyui-numberbox" name="discount" data-options="min:0,precision:2"/>
                         </td>
                         <td>购卡人:</td>
                         <td>
-                            <input class="easyui-textbox" name="cardBuyer" data-options="required:true"/>
+                            <input class="easyui-textbox" name="cardBuyer" />
                         </td>
                     </tr>
                 </table>
@@ -359,7 +363,7 @@
                 <tr>
                     <td>开卡时间:</td>
                     <td>
-                        <input class="easyui-datetimebox" name="openCardTime" data-options="required:true,editable:false"/>
+                        <input class="easyui-datebox" name="openCardTime" data-options="required:true,editable:false"/>
                     </td>
                     <td>状态:</td>
                     <td>
@@ -369,21 +373,21 @@
                 <tr>
                     <td>油品:</td>
                     <td>
-                        <input class="easyui-textbox" name="oils" data-options="required:true"/>
+                        <input class="easyui-textbox" name="oils" />
                     </td>
                     <td>客户编号:</td>
                     <td>
-                        <input class="easyui-textbox" name="customerCode" data-options="required:true"/>
+                        <input class="easyui-textbox" name="customerCode" />
                     </td>
                 </tr>
                 <tr>
                     <td>折扣:</td>
                     <td>
-                        <input class="easyui-numberbox" name="discount" data-options="required:true,min:0,precision:2"/>
+                        <input class="easyui-numberbox" name="discount" data-options="min:0,precision:2"/>
                     </td>
                     <td>购卡人:</td>
                     <td>
-                        <input class="easyui-textbox" name="cardBuyer" data-options="required:true"/>
+                        <input class="easyui-textbox" name="cardBuyer" />
                     </td>
                 </tr>
             </table>

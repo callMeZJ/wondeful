@@ -9,6 +9,7 @@ import lombok.NoArgsConstructor;
 
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.sql.Date;
 import java.sql.Timestamp;
 
 @Builder
@@ -24,7 +25,7 @@ public class MasterAttacherCardRelationshipDTO {
 
     private String attacherCardNum;
 
-    private Timestamp openCardTime;
+    private Date openCardTime;
 
     private String status;
 
